@@ -21,9 +21,6 @@ class User {
   filterRecipes(type) {
     return this.favoriteRecipes.filter(recipe => recipe.type.includes(type));
   }
-  searchForRecipe(keyword) {
-    return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) || recipe.ingredients.includes(keyword));
-  }
 }
 
 module.exports = User;
