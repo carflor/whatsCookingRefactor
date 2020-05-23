@@ -13,4 +13,4 @@ class Recipe {
   }
 }
 
-module.exports = Recipe;
+export default Recipe;
