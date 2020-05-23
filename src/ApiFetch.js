@@ -14,7 +14,8 @@ class ApiFetch {
   }
 
   getRecipesData() {
-
+    let url = `${this.rootUrl}/recipes/recipeData`
+    return fetch(url).then(response => response.json())
   }
 
   // FOR POSTING ADDITIONS POSITIVE NUMBERS - NEGATIVE NUMBERS WILL MAKE DELETIONS

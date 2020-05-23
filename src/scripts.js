@@ -1,8 +1,3 @@
-import $ from 'jquery';
-// import users from './data/users-data';
-// import ingredientsData from './data/ingredient-data';
-import recipeData from  './data/recipe-data';
-
 import './css/base.scss';
 import './css/styles.scss';
 
@@ -15,26 +10,21 @@ let api = new ApiFetch();
 const fetchData = () => {
   let userData = api.getUsersData()
   let ingredientsData = api.getIngredientsData()
-  const recipeData = api.getRecipesData();
+  const recipesData = api.getRecipesData();
   
-  Promise.all([userData, ingredientsData, recipeData])
-    .then(dataValues => {
-      let usersData = dataValues[0].wcUsersData
-      let ingredientsData = dataValues[1].ingredientsData
-      console.log("whoop:", recipeData)
+  Promise.all([userData, ingredientsData, recipesData])
+    .then(dataSet => dataSet = {
+      usersData: dataSet[0].wcUsersData,
+      ingredientsData: dataSet[1].ingredientsData,
+      recipesData: dataSet[2].recipeData, 
+    }).then(dataSet => {
+      generateUser(dataSet.usersData, dataSet.ingredientsData);
+      createCards(dataSet.recipesData);
+      findTags(dataSet.recipesData);
+    })
+    .catch(error => console.log(error.message))
+  }
   
-      generateUser(usersData)
-    }).catch(error => console.log(error.message))
-}
-
-
-
-
-
-
-
-
-
 
 
 
@@ -52,10 +42,6 @@ let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let user;
 
-// ON LOAD EVENTS
-window.addEventListener("load", createCards);
-window.addEventListener("load", findTags);
-// window.addEventListener("load", generateUser);
 
 // ON CLICK EVENTS
 allRecipesBtn.addEventListener("click", showAllRecipes);
@@ -66,7 +52,7 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 
 // GENERATE A USER ON LOAD
-function generateUser(users) {
+function generateUser(users, ingredients) {
   user = new User(users[Math.floor(Math.random() * users.length)]);
   let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
@@ -75,11 +61,11 @@ function generateUser(users) {
     </div>`;
   document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
     welcomeMsg);
-  findPantryInfo();
+  findPantryInfo(ingredients);
 }
 
 // CREATE RECIPE CARDS
-function createCards() {
+function createCards(recipeData) {
   recipeData.forEach(recipe => {
     let recipeInfo = new Recipe(recipe);
     let shortRecipeName = recipeInfo.name;
@@ -108,7 +94,7 @@ function addToDom(recipeInfo, shortRecipeName) {
 }
 
 // FILTER BY RECIPE TAGS
-function findTags() {
+function findTags(recipeData) {
   let tags = [];
   recipeData.forEach(recipe => {
     recipe.tags.forEach(tag => {
@@ -307,23 +293,21 @@ function showAllRecipes() {
   showWelcomeBanner();
 }
 
-console.log(ingredientsData, 'global ingredients var')
-
 // CREATE AND USE PANTRY
-function findPantryInfo() {
-  user.pantry.forEach(item => {
-    let itemInfo = ingredientsData.find(ingredient => {
-      return ingredient.id === item.ingredient;
+function findPantryInfo(ingredientData) {
+  user.pantry.forEach(ingredient => {
+    let ingredientInfo = ingredientData.find(ing => {
+      return ing.id === ingredient.ingredient;
     });
-    let originalIngredient = pantryInfo.find(ingredient => {
-      if (itemInfo) {
-        return ingredient.name === itemInfo.name;
+    let originalIngredient = pantryInfo.find(ing => {
+      if (ingredientInfo) {
+        return ing.name === ingredientInfo.name;
       }
     });
-    if (itemInfo && originalIngredient) {
-      originalIngredient.count += item.amount;
-    } else if (itemInfo) {
-      pantryInfo.push({name: itemInfo.name, count: item.amount});
+    if (ingredientInfo && originalIngredient) {
+      originalIngredient.count += ingredient.amount;
+    } else if (ingredientInfo) {
+      pantryInfo.push({name: ingredientInfo.name, count: ingredient.amount});
     }
   });
   displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
