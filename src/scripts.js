@@ -1,13 +1,43 @@
 import $ from 'jquery';
-import users from './data/users-data';
+// import users from './data/users-data';
+// import ingredientsData from './data/ingredient-data';
 import recipeData from  './data/recipe-data';
-import ingredientData from './data/ingredient-data';
 
 import './css/base.scss';
 import './css/styles.scss';
 
 import User from './user';
 import Recipe from './recipe';
+import ApiFetch from './ApiFetch'
+
+let api = new ApiFetch();
+
+const fetchData = () => {
+  let userData = api.getUsersData()
+  let ingredientsData = api.getIngredientsData()
+  console.log(ingredientsData, 'ingredients FROM API')
+  
+  Promise.all([userData, ingredientsData])
+    .then(dataValues => {
+      let usersData = dataValues[0].wcUsersData
+      let ingredientsData = dataValues[1].ingredientsData
+      console.log(ingredientsData, 'ingred inside PROMISE')
+  // probably run a start APP function inside here that starts the app 
+      generateUser(usersData)
+    }).catch(error => console.log(error.message))
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
@@ -22,10 +52,12 @@ let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let user;
 
-
+// ON LOAD EVENTS
 window.addEventListener("load", createCards);
 window.addEventListener("load", findTags);
-window.addEventListener("load", generateUser);
+// window.addEventListener("load", generateUser);
+
+// ON CLICK EVENTS
 allRecipesBtn.addEventListener("click", showAllRecipes);
 filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes);
@@ -34,8 +66,9 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 
 // GENERATE A USER ON LOAD
-function generateUser() {
+function generateUser(users) {
   user = new User(users[Math.floor(Math.random() * users.length)]);
+  console.log(user, "user inside generate")
   let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
@@ -275,6 +308,8 @@ function showAllRecipes() {
   showWelcomeBanner();
 }
 
+console.log(ingredientsData, 'global ingredients var')
+
 // CREATE AND USE PANTRY
 function findPantryInfo() {
   user.pantry.forEach(item => {
@@ -332,3 +367,7 @@ function findRecipesWithCheckedIngredients(selected) {
     }
   })
 }
+
+
+// ADDED FETCH AT BOTTOM 
+fetchData()
