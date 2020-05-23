@@ -27,20 +27,20 @@ const fetchData = () => {
   
 
 
+let user;
+let menuOpen = false;
+let pantryInfo = [];
+let recipes = [];
 
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main");
-let menuOpen = false;
 let pantryBtn = document.querySelector(".my-pantry-btn");
-let pantryInfo = [];
-let recipes = [];
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
-let user;
 
 
 // ON CLICK EVENTS
@@ -54,14 +54,18 @@ showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 // GENERATE A USER ON LOAD
 function generateUser(users, ingredients) {
   user = new User(users[Math.floor(Math.random() * users.length)]);
-  let firstName = user.name.split(" ")[0];
+  findPantryInfo(ingredients);
+  createUserDisplay(user, ingredients);
+}
+
+function createUserDisplay(user, ingredients) {
+let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
       <h1>Welcome ${firstName}!</h1>
     </div>`;
   document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
     welcomeMsg);
-  findPantryInfo(ingredients);
 }
 
 // CREATE RECIPE CARDS
@@ -260,19 +264,6 @@ function showMyRecipesBanner() {
 function showWelcomeBanner() {
   document.querySelector(".welcome-msg").style.display = "flex";
   document.querySelector(".my-recipes-banner").style.display = "none";
-}
-
-function filterNonSearched(filtered) {
-  let found = recipes.filter(recipe => {
-    let ids = filtered.map(f => f.id);
-    return !ids.includes(recipe.id)
-  })
-  hideUnselectedRecipes(found);
-}
-
-function createRecipeObject(recipes) {
-  recipes = recipes.map(recipe => new Recipe(recipe));
-  return recipes
 }
 
 function toggleMenu() {
