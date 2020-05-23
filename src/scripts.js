@@ -26,9 +26,6 @@ const fetchData = () => {
   }
   
 
-
-
-
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
@@ -292,6 +289,7 @@ function showAllRecipes() {
   });
   showWelcomeBanner();
 }
+
 
 // CREATE AND USE PANTRY
 function findPantryInfo(ingredientData) {
