@@ -15,14 +15,14 @@ let api = new ApiFetch();
 const fetchData = () => {
   let userData = api.getUsersData()
   let ingredientsData = api.getIngredientsData()
-  console.log(ingredientsData, 'ingredients FROM API')
+  const recipeData = api.getRecipesData();
   
-  Promise.all([userData, ingredientsData])
+  Promise.all([userData, ingredientsData, recipeData])
     .then(dataValues => {
       let usersData = dataValues[0].wcUsersData
       let ingredientsData = dataValues[1].ingredientsData
-      console.log(ingredientsData, 'ingred inside PROMISE')
-  // probably run a start APP function inside here that starts the app 
+      console.log("whoop:", recipeData)
+  
       generateUser(usersData)
     }).catch(error => console.log(error.message))
 }
@@ -68,7 +68,6 @@ showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 // GENERATE A USER ON LOAD
 function generateUser(users) {
   user = new User(users[Math.floor(Math.random() * users.length)]);
-  console.log(user, "user inside generate")
   let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
