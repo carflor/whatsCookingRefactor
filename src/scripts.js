@@ -46,8 +46,10 @@ let tagList = document.querySelector(".tag-list");
 
 // ON CLICK EVENTS
 allRecipesBtn.addEventListener("click", domUpdates.showAllRecipes(recipes));
-filterBtn.addEventListener("click", findCheckedBoxes);
-main.addEventListener("click", addToMyRecipes);
+filterBtn.addEventListener("click", domUpdates.findCheckedBoxes);
+main.addEventListener("click", function() {
+  domUpdates.addToMyRecipes(event, fullRecipeInfo, recipes)
+});
 pantryBtn.addEventListener("click", toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
@@ -87,34 +89,6 @@ function findTags(recipeData) {
 }
 
 
-
-function findCheckedBoxes() {
-  let tagCheckboxes = document.querySelectorAll(".checked-tag");
-  let checkboxInfo = Array.from(tagCheckboxes)
-  let selectedTags = checkboxInfo.filter(box => {
-    return box.checked;
-  })
-  findTaggedRecipes(selectedTags);
-}
-
-function findTaggedRecipes(selected) {
-  let filteredResults = [];
-  selected.forEach(tag => {
-    let allRecipes = recipes.filter(recipe => {
-      return recipe.tags.includes(tag.id);
-    });
-    allRecipes.forEach(recipe => {
-      if (!filteredResults.includes(recipe)) {
-        filteredResults.push(recipe);
-      }
-    })
-  });
-  domUpdates.showAllRecipes(recipes);
-  if (filteredResults.length > 0) {
-    filterRecipes(filteredResults);
-  }
-}
-
 function filterRecipes(filtered) {
   let foundRecipes = recipes.filter(recipe => {
     return !filtered.includes(recipe);
@@ -130,34 +104,9 @@ function hideUnselectedRecipes(foundRecipes) {
 }
 
 // FAVORITE RECIPE FUNCTIONALITY
-function addToMyRecipes() {
-  if (event.target.className === "card-apple-icon") {
-    let cardId = parseInt(event.target.closest(".recipe-card").id)
-    if (!user.favoriteRecipes.includes(cardId)) {
-      event.target.src = "../images/apple-logo.png";
-      user.saveRecipe(cardId);
-    } else {
-      event.target.src = "../images/apple-logo-outline.png";
-      user.removeRecipe(cardId);
-    }
-  } else if (event.target.id === "exit-recipe-btn") {
-    exitRecipe();
-  } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
-    let recipeId = event.target.closest(".recipe-card").id
-    openRecipeInfo(recipeId);
-  }
-}
 
-function isDescendant(parent, child) {
-  let node = child;
-  while (node !== null) {
-    if (node === parent) {
-      return true;
-    }
-    node = node.parentNode;
-  }
-  return false;
-}
+
+
 
 function showSavedRecipes() {
   let unsavedRecipes = recipes.filter(recipe => {
@@ -167,67 +116,10 @@ function showSavedRecipes() {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domRecipe.style.display = "none";
   });
-  showMyRecipesBanner();
-}
-
-// CREATE RECIPE INSTRUCTIONS
-function openRecipeInfo(recipeId) {
-  fullRecipeInfo.style.display = "inline";
-  let recipe = recipes.find(recipe => recipe.id == recipeId)
-  generateRecipeTitle(recipe, generateIngredients(recipe));
-  addRecipeImage(recipe);
-  generateInstructions(recipe);
-  fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
-}
-
-function generateRecipeTitle(recipe, ingredients) {
-  let recipeTitle = `
-    <button id="exit-recipe-btn">X</button>
-    <h3 id="recipe-title">${recipe.name}</h3>
-    <h4>Ingredients</h4>
-    <p>${ingredients}</p>`
-  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
-}
-
-function addRecipeImage(recipe) {
-  document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
-}
-
-function generateIngredients(recipe) {
-  return recipe && recipe.ingredients.map(i => {
-    return `${capitalize(recipe.name)} (${i.quantity.amount} ${i.quantity.unit})`
-  }).join(", ");
-}
-
-function generateInstructions(recipe) {
-  let instructionsList = "";
-  let instructions = recipe.instructions.map(i => {
-    return i.instruction;
-  });
-  instructions.forEach(i => {
-    instructionsList += `<li>${i}</li>`
-  });
-  fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-  fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
-}
-
-function exitRecipe() {
-  while (fullRecipeInfo.firstChild &&
-    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
-  fullRecipeInfo.style.display = "none";
-  document.getElementById("overlay").remove();
+  domUpdates.showMyRecipesBanner();
 }
 
 // TOGGLE DISPLAYS
-function showMyRecipesBanner() {
-  document.querySelector(".welcome-msg").style.display = "none";
-  document.querySelector(".my-recipes-banner").style.display = "block";
-}
-
-function showWelcomeBanner() {
-  document.querySelector(".welcome-msg").style.display = "flex";
-  document.querySelector(".my-recipes-banner").style.display = "none";
-}
 
 function toggleMenu() {
   var menuDropdown = document.querySelector(".drop-menu");
