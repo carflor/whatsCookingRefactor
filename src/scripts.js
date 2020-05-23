@@ -1,7 +1,7 @@
 import $ from 'jquery';
 // import users from './data/users-data';
 import recipeData from  './data/recipe-data';
-import ingredientData from './data/ingredient-data';
+import ingredientsData from './data/ingredient-data';
 
 import './css/base.scss';
 import './css/styles.scss';
@@ -304,6 +304,8 @@ function showAllRecipes() {
   });
   showWelcomeBanner();
 }
+
+console.log(ingredientsData, 'global ingredients var')
 
 // CREATE AND USE PANTRY
 function findPantryInfo() {
