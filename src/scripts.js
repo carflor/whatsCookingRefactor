@@ -23,7 +23,7 @@ const fetchData = () => {
       let ingredientsData = dataValues[1].ingredientsData
       console.log(ingredientsData, 'ingred inside PROMISE')
   // probably run a start APP function inside here that starts the app 
-      generateUser(usersData)
+      generateUser(usersData, ingredientsData)
     }).catch(error => console.log(error.message))
 }
 
@@ -66,7 +66,7 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 
 // GENERATE A USER ON LOAD
-function generateUser(users) {
+function generateUser(users, ingredients) {
   user = new User(users[Math.floor(Math.random() * users.length)]);
   console.log(user, "user inside generate")
   let firstName = user.name.split(" ")[0];
@@ -76,7 +76,7 @@ function generateUser(users) {
     </div>`;
   document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
     welcomeMsg);
-  findPantryInfo();
+  findPantryInfo(ingredients);
 }
 
 // CREATE RECIPE CARDS
@@ -308,12 +308,13 @@ function showAllRecipes() {
   showWelcomeBanner();
 }
 
-console.log(ingredientsData, 'global ingredients var')
+
 
 // CREATE AND USE PANTRY
-function findPantryInfo() {
+function findPantryInfo(ingredients) {
+  console.log(ingredients, 'INSIDE PASSED PARAM')
   user.pantry.forEach(item => {
-    let itemInfo = ingredientsData.find(ingredient => {
+    let itemInfo = ingredients.find(ingredient => {
       return ingredient.id === item.ingredient;
     });
     let originalIngredient = pantryInfo.find(ingredient => {
