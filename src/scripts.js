@@ -1,7 +1,7 @@
 import $ from 'jquery';
 // import users from './data/users-data';
+// import ingredientsData from './data/ingredient-data';
 import recipeData from  './data/recipe-data';
-import ingredientsData from './data/ingredient-data';
 
 import './css/base.scss';
 import './css/styles.scss';
@@ -14,11 +14,14 @@ let api = new ApiFetch();
 
 const fetchData = () => {
   let userData = api.getUsersData()
-  console.log(userData, 'USERDATA FROM API')
+  let ingredientsData = api.getIngredientsData()
+  console.log(ingredientsData, 'ingredients FROM API')
   
-  Promise.all([userData])
+  Promise.all([userData, ingredientsData])
     .then(dataValues => {
       let usersData = dataValues[0].wcUsersData
+      let ingredientsData = dataValues[1].ingredientsData
+      console.log(ingredientsData, 'ingred inside PROMISE')
   // probably run a start APP function inside here that starts the app 
       generateUser(usersData)
     }).catch(error => console.log(error.message))
