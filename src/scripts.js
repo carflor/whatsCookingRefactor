@@ -55,10 +55,10 @@ showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 function generateUser(users, ingredients) {
   user = new User(users[Math.floor(Math.random() * users.length)]);
   findPantryInfo(ingredients);
-  createUserDisplay(user, ingredients);
+  createUserDisplay(user);
 }
 
-function createUserDisplay(user, ingredients) {
+function createUserDisplay(user) {
 let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
@@ -180,7 +180,8 @@ function addToMyRecipes() {
   } else if (event.target.id === "exit-recipe-btn") {
     exitRecipe();
   } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
-    openRecipeInfo(event);
+    let recipeId = event.target.closest(".recipe-card").id
+    openRecipeInfo(recipeId);
   }
 }
 
@@ -207,10 +208,9 @@ function showSavedRecipes() {
 }
 
 // CREATE RECIPE INSTRUCTIONS
-function openRecipeInfo(event) {
+function openRecipeInfo(recipeId) {
   fullRecipeInfo.style.display = "inline";
-  let recipeId = event.path.find(e => e.id).id;
-  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+  let recipe = recipes.find(recipe => recipe.id == recipeId)
   generateRecipeTitle(recipe, generateIngredients(recipe));
   addRecipeImage(recipe);
   generateInstructions(recipe);
@@ -232,14 +232,14 @@ function addRecipeImage(recipe) {
 
 function generateIngredients(recipe) {
   return recipe && recipe.ingredients.map(i => {
-    return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
+    return `${capitalize(recipe.name)} (${i.quantity.amount} ${i.quantity.unit})`
   }).join(", ");
 }
 
 function generateInstructions(recipe) {
   let instructionsList = "";
   let instructions = recipe.instructions.map(i => {
-    return i.instruction
+    return i.instruction;
   });
   instructions.forEach(i => {
     instructionsList += `<li>${i}</li>`
