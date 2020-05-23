@@ -9,7 +9,8 @@ class ApiFetch {
   }
 
   getIngredientsData() {
-
+    let url = `${this.rootUrl}/ingredients/ingredientsData`
+    return fetch(url).then(response => response.json())
   }
 
   getRecipesData() {
