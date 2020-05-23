@@ -284,6 +284,7 @@ function showAllRecipes() {
   showWelcomeBanner();
 }
 
+
 // CREATE AND USE PANTRY
 function findPantryInfo(ingredientData) {
   user.pantry.forEach(ingredient => {
