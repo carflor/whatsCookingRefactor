@@ -29,7 +29,6 @@ const fetchData = () => {
 
 
 let user;
-let menuOpen = false;
 let pantryInfo = [];
 let recipes = [];
 
@@ -42,15 +41,22 @@ let pantryBtn = document.querySelector(".my-pantry-btn");
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
+var menuDropdown = document.querySelector(".drop-menu");
 
 
 // ON CLICK EVENTS
-allRecipesBtn.addEventListener("click", domUpdates.showAllRecipes(recipes));
-filterBtn.addEventListener("click", domUpdates.findCheckedBoxes);
-main.addEventListener("click", function() {
-  domUpdates.addToMyRecipes(event, fullRecipeInfo, recipes)
+allRecipesBtn.addEventListener("click", function() {
+  domUpdates.showAllRecipes(recipes)
 });
-pantryBtn.addEventListener("click", toggleMenu);
+filterBtn.addEventListener("click", function() {
+  domUpdates.findCheckedBoxes(recipes)
+});
+main.addEventListener("click", function() {
+  domUpdates.addToMyRecipes(event, fullRecipeInfo, recipes, user)
+});
+pantryBtn.addEventListener("click", function() {
+  domUpdates.toggleMenu(menuDropdown)
+});
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 
@@ -89,24 +95,7 @@ function findTags(recipeData) {
 }
 
 
-function filterRecipes(filtered) {
-  let foundRecipes = recipes.filter(recipe => {
-    return !filtered.includes(recipe);
-  });
-  hideUnselectedRecipes(foundRecipes)
-}
-
-function hideUnselectedRecipes(foundRecipes) {
-  foundRecipes.forEach(recipe => {
-    let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
-  });
-}
-
 // FAVORITE RECIPE FUNCTIONALITY
-
-
-
 
 function showSavedRecipes() {
   let unsavedRecipes = recipes.filter(recipe => {
@@ -118,19 +107,6 @@ function showSavedRecipes() {
   });
   domUpdates.showMyRecipesBanner();
 }
-
-// TOGGLE DISPLAYS
-
-function toggleMenu() {
-  var menuDropdown = document.querySelector(".drop-menu");
-  menuOpen = !menuOpen;
-  if (menuOpen) {
-    menuDropdown.style.display = "block";
-  } else {
-    menuDropdown.style.display = "none";
-  }
-}
-
 
 
 // CREATE AND USE PANTRY
@@ -150,16 +126,7 @@ function findPantryInfo(ingredientData) {
       pantryInfo.push({name: ingredientInfo.name, count: ingredient.amount});
     }
   });
-  displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
-}
-
-function displayPantryInfo(pantry) {
-  pantry.forEach(ingredient => {
-    let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
-      <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
-    document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
-      ingredientHtml);
-  });
+  domUpdates.displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
 }
 
 function findCheckedPantryBoxes() {

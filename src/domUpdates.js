@@ -61,16 +61,16 @@ const domUpdates = {
     document.querySelector(".my-recipes-banner").style.display = "block";
   },
 
-  findCheckedBoxes() {
+  findCheckedBoxes(recipes) {
     let tagCheckboxes = document.querySelectorAll(".checked-tag");
     let checkboxInfo = Array.from(tagCheckboxes)
     let selectedTags = checkboxInfo.filter(box => {
       return box.checked;
     })
-    this.findTaggedRecipes(selectedTags);
+    this.findTaggedRecipes(selectedTags, recipes);
   },
 
-  findTaggedRecipes(selected) {
+  findTaggedRecipes(selected, recipes) {
     let filteredResults = [];
     selected.forEach(tag => {
       let allRecipes = recipes.filter(recipe => {
@@ -84,8 +84,22 @@ const domUpdates = {
     });
     this.showAllRecipes(recipes);
     if (filteredResults.length > 0) {
-      filterRecipes(filteredResults);
+      this.filterRecipes(recipes, filteredResults);
     }
+  },
+
+  filterRecipes(recipes, filtered) {
+    let foundRecipes = recipes.filter(recipe => {
+      return !filtered.includes(recipe);
+    });
+    this.hideUnselectedRecipes(foundRecipes)
+  },
+  
+  hideUnselectedRecipes(foundRecipes) {
+    foundRecipes.forEach(recipe => {
+      let domRecipe = document.getElementById(`${recipe.id}`);
+      domRecipe.style.display = "none";
+    });
   },
 
   generateIngredients(recipe) {
@@ -140,9 +154,9 @@ const domUpdates = {
     return false;
   },
 
-  addToMyRecipes(event, element, recipes) {
+  addToMyRecipes(event, element, recipes, user) {
     if (event.target.className === "card-apple-icon") {
-      this.toggleAppleIcon(event)
+      this.toggleAppleIcon(event, user)
     } else if (event.target.id === "exit-recipe-btn") {
       this.exitRecipe(element);
     } else if (this.isDescendant(event.target.closest(".recipe-card"), event.target)) {
@@ -151,7 +165,7 @@ const domUpdates = {
     }
   },
 
-  toggleAppleIcon(event) {
+  toggleAppleIcon(event, user) {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     if (!user.favoriteRecipes.includes(cardId)) {
       event.target.src = "../images/apple-logo.png";
@@ -169,6 +183,22 @@ const domUpdates = {
     document.getElementById("overlay").remove();
   },
 
+  toggleMenu(menu) {
+    if (menu.classList.value.includes('hidden')) {
+      menu.classList.remove("hidden");
+    } else {
+      menu.classList.add("hidden");
+    }
+  },
+
+  displayPantryInfo(pantry) {
+    pantry.forEach(ingredient => {
+      let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
+        <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
+      document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
+        ingredientHtml);
+    });
+  }
 };
 
 export default domUpdates
