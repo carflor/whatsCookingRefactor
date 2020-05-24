@@ -6,6 +6,15 @@ import Recipe from './recipe';
 import ApiFetch from './ApiFetch'
 import domUpdates from './domUpdates'
 
+import './images/apple-logo-outline.png'
+import './images/apple-logo.png'
+import './images/chicken-parm.jpg'
+import './images/cookbook.png'
+import './images/green-apples.jpg'
+import './images/pancakes.jpg'
+import './images/search.png'
+import './images/seasoning.png'
+
 let api = new ApiFetch();
 
 const fetchData = () => {
