@@ -22,7 +22,7 @@ const domUpdates = {
       <h4>${recipeInfo.tags[0]}</h4>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
     </div>`
-   element.insertAdjacentHTML("beforeend", cardHtml);
+    element.insertAdjacentHTML("beforeend", cardHtml);
   },
   
   listTags(allTags, element) {
