@@ -7,11 +7,17 @@ class Recipe {
     this.ingredients = recipe.ingredients;
     this.instructions = recipe.instructions;
   }
-  calculateIngredientsCost() {
+
+  calculateIngredientsCost(ingredientData) {
     // return this.ingredients.map(i => {
     //   ingredientData.find(ingredient => ingredient === i);
     // });
   }
+  //calculate ingredients missing
+  // isCooked t/f
+  // isFav t/f
+  // fav and to cook are instances of recipeRepo
+  
 }
 
 export default Recipe;

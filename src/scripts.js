@@ -166,7 +166,5 @@ function findRecipesWithCheckedIngredients(selected) {
     }
   })
 }
-
-
 // ADDED FETCH AT BOTTOM 
 fetchData()
