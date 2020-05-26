@@ -2,7 +2,8 @@ import './css/base.scss';
 import './css/styles.scss';
 import User from './user';
 import Recipe from './recipe';
-import ApiFetch from './ApiFetch'
+import RecipeRepo from './recipeRepo';
+import ApiFetch from './ApiFetch';
 import domUpdates from './domUpdates'
 import './images/apple-logo-outline.png'
 import './images/apple-logo.png'
@@ -16,7 +17,8 @@ import './images/seasoning.png'
 let api = new ApiFetch();
 let user;
 let pantryInfo = [];
-let recipes = [];
+let recipeRepo;
+let recipes;
   
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
@@ -57,11 +59,11 @@ const fetchData = () => {
     .then(dataSet => dataSet = {
       usersData: dataSet[0].wcUsersData,
       ingredientsData: dataSet[1].ingredientsData,
-      recipesData: dataSet[2].recipeData, 
+      recipeData: dataSet[2].recipeData, 
     }).then(dataSet => {
       generateUser(dataSet.usersData, dataSet.ingredientsData);
-      createCards(dataSet.recipesData);
-      findTags(dataSet.recipesData);
+      createCards(dataSet.recipeData);
+      findTags(dataSet.recipeData);
     })
     .catch(error => console.log(error.message))
 }
@@ -75,14 +77,14 @@ function generateUser(users, ingredients) {
 
 // CREATE RECIPE CARDS
 function createCards(recipeData) {
-  recipeData.forEach(recipe => {
-    let recipeInfo = new Recipe(recipe);
-    let shortRecipeName = recipeInfo.name;
-    recipes.push(recipeInfo);
-    if (recipeInfo.name.length > 40) {
-      shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
+  recipeRepo = new RecipeRepo(recipeData);
+  recipes = recipeRepo.cookBook;
+  recipes.forEach(recipe => {
+    let shortRecipeName = recipe.name;
+    if (recipe.name.length > 40) {
+      shortRecipeName = recipe.name.substring(0, 40) + "...";
     }
-    domUpdates.addToDom(recipeInfo, shortRecipeName, main)
+    domUpdates.addToDom(recipe, shortRecipeName, main)
   });
 }
 
@@ -103,7 +105,7 @@ function findTags(recipeData) {
 // FAVORITE RECIPE FUNCTIONALITY
 function showSavedRecipes() {
   let unsavedRecipes = recipes.filter(recipe => {
-    return !user.favoriteRecipes.includes(recipe.id);
+    return !user.favoriteRecipes.cookBook.includes(recipe.id);
   });
   unsavedRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
@@ -164,21 +166,16 @@ function findRecipesWithCheckedIngredients(selected) {
 function searchMeals(event) {
   const searchValue = event.target.value.toLowerCase();
   main.innerHTML = " ";
-  const filteredMeals = [];
-  recipes.forEach(meal => {
-    if (meal.name.toLowerCase().includes(searchValue) && !filteredMeals.includes(meal)) {
-      filteredMeals.push(meal)
+  let searchResults = recipeRepo.searchRecipes(searchValue)
+  
+  searchResults.forEach( recipe => {
+    let shortRecipeName = recipe.name;
+    if (recipe.name.length > 40) {
+      shortRecipeName = recipe.name.substring(0, 40) + "...";
     }
+    domUpdates.addToDom(recipe, shortRecipeName, main)
   })
-  // this is creating an infinte loop!
-  // filteredMeals.forEach(recipe => {
-  //   console.log(recipe, 'single recipe')
-  //   main.insertAdjacentHTML('afterbegin', createCards(recipe))
-  // })
-  console.log(filteredMeals, 'filtered result')
-  createCards(filteredMeals)
 }
-
 
 // ADDED FETCH AT BOTTOM 
 fetchData()

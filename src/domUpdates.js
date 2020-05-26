@@ -10,7 +10,7 @@ const domUpdates = {
   },
 
   addToDom(recipeInfo, shortRecipeName, element) {
-  let cardHtml = `
+    let cardHtml = `
     <div class="recipe-card" id=${recipeInfo.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
       <div class="card-photo-container">
@@ -155,24 +155,25 @@ const domUpdates = {
   },
 
   addToMyRecipes(event, element, recipes, user) {
+
     if (event.target.className === "card-apple-icon") {
       this.toggleAppleIcon(event, user)
     } else if (event.target.id === "exit-recipe-btn") {
-      this.exitRecipe(element);
+      this.exitRecipe(element); 
     } else if (this.isDescendant(event.target.closest(".recipe-card"), event.target)) {
       let recipeId = event.target.closest(".recipe-card").id
-      this.openRecipeInfo(recipeId, element, recipes);
+      this.openRecipeInfo(recipeId, element, recipes);  
     }
   },
 
   toggleAppleIcon(event, user) {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
-    if (!user.favoriteRecipes.includes(cardId)) {
+    if (!user.favoriteRecipes.cookBook.includes(cardId)) {
       event.target.src = "../images/apple-logo.png";
-      user.saveRecipe(cardId);
+      user.favoriteRecipes.addRecipe(cardId);
     } else {
       event.target.src = "../images/apple-logo-outline.png";
-      user.removeRecipe(cardId);
+      user.favoriteRecipes.removeRecipe(cardId);
     }
   },
 
