@@ -1,3 +1,5 @@
+import ingredientsData from '../src/data/ingredient-data'
+
 class Recipe {
   constructor(recipe) {
     this.id = recipe.id;
@@ -7,10 +9,13 @@ class Recipe {
     this.ingredients = recipe.ingredients;
     this.instructions = recipe.instructions;
   }
-  calculateIngredientsCost() {
-    // return this.ingredients.map(i => {
-    //   ingredientData.find(ingredient => ingredient === i);
-    // });
+
+  calculateIngredientsCost() { 
+    let ingredientsId = this.ingredients.map(ingredient => ingredient.id)
+
+    return ingredientsData.filter(ingData => {
+      return ingredientsId.includes(ingData.id);
+    });
   }
 }
 
