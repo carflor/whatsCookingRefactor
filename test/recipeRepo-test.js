@@ -101,6 +101,5 @@ describe('recipeRepo', function() {
   it('should do nothing if no search parameter is given', function() {
     let searchResult = recipeRepo.searchRecipes()
     expect(searchResult).to.deep.equal(recipeRepo.cookBook);
-  })
-
+  });
 });
