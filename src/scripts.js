@@ -165,14 +165,11 @@ function searchMeals(event) {
   const searchValue = event.target.value.toLowerCase();
   main.innerHTML = " ";
   const filteredMeals = [];
-  
-  
   recipes.forEach(meal => {
     if (meal.name.toLowerCase().includes(searchValue) && !filteredMeals.includes(meal)) {
       filteredMeals.push(meal)
     }
   })
-
   // this is creating an infinte loop!
   // filteredMeals.forEach(recipe => {
   //   console.log(recipe, 'single recipe')
