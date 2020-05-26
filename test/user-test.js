@@ -11,7 +11,6 @@ describe.skip('User', function() {
   beforeEach(function() {
     userInfo = users[0];
     user = new User(userInfo)
-
     recipe = {name: 'Chicken Parm', type: ['italian', 'dinner']};
   });
 
