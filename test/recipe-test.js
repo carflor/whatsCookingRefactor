@@ -47,8 +47,6 @@ describe('Recipe', function() {
   });
 
   it('should be able to return ingredient data for recipe', function() {
-    
     expect(recipe.calculateIngredientsCost().length).to.equal(recipe.ingredients.length)
-    
   });
 });
