@@ -40,7 +40,6 @@ class RecipeRepo {
       }
     })
     return filteredMeals
-    // createCards(filteredMeals) - this is done DOMside
   }
 };
 
