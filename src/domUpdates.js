@@ -1,6 +1,6 @@
 const domUpdates = {
   createUserDisplay(user) {
-  let firstName = user.name.split(" ")[0];
+    let firstName = user.name.split(" ")[0];
     let welcomeMsg = `
       <div class="welcome-msg">
         <h1>Welcome ${firstName}!</h1>
@@ -10,7 +10,7 @@ const domUpdates = {
   },
 
   addToDom(recipeInfo, shortRecipeName, element) {
-  let cardHtml = `
+    let cardHtml = `
     <div class="recipe-card" id=${recipeInfo.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
       <div class="card-photo-container">
@@ -22,7 +22,7 @@ const domUpdates = {
       <h4>${recipeInfo.tags[0]}</h4>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
     </div>`
-   element.insertAdjacentHTML("beforeend", cardHtml);
+    element.insertAdjacentHTML("beforeend", cardHtml);
   },
   
   listTags(allTags, element) {
@@ -39,12 +39,16 @@ const domUpdates = {
     }).join(" ");
   },
 
-  showAllRecipes(allRecipes) {
+  showAllRecipes(allRecipes, element) {
+    element.innerHTML = '';
     allRecipes.forEach(recipe => {
-      let domRecipe = document.getElementById(`${recipe.id}`);
-      domRecipe.style.display = "block";
+      let shortRecipeName = recipe.name
+      if (recipe.name.length > 40) {
+        shortRecipeName = recipe.name.substring(0, 40) + "...";
+      }
+      this.addToDom(recipe, shortRecipeName, element)
     });
-    this.showWelcomeBanner(allRecipes);
+    this.showWelcomeBanner();
   },
 
   showWelcomeBanner() {
@@ -156,25 +160,28 @@ const domUpdates = {
 
   addToMyRecipes(event, element, recipes, user) {
     if (event.target.className === "card-apple-icon") {
-      this.toggleAppleIcon(event, user)
+      this.toggleAppleIcon(event, user, recipes)
     } else if (event.target.id === "exit-recipe-btn") {
-      this.exitRecipe(element);
+      this.exitRecipe(element); 
     } else if (this.isDescendant(event.target.closest(".recipe-card"), event.target)) {
       let recipeId = event.target.closest(".recipe-card").id
-      this.openRecipeInfo(recipeId, element, recipes);
+      this.openRecipeInfo(recipeId, element, recipes);  
     }
   },
 
-  toggleAppleIcon(event, user) {
-    let cardId = parseInt(event.target.closest(".recipe-card").id)
-    if (!user.favoriteRecipes.includes(cardId)) {
+  toggleAppleIcon(event, user, allRecipes) {
+    let cardId = parseInt(event.target.closest(".recipe-card").id);
+    let matchedRecipe = allRecipes.recipes.find( recipe => recipe.id === cardId);
+    
+    if (!allRecipes.userFavorites.includes(matchedRecipe)) {
       event.target.src = "../images/apple-logo.png";
-      user.saveRecipe(cardId);
+      allRecipes.addRecipe(matchedRecipe, 'userFavorites');
     } else {
       event.target.src = "../images/apple-logo-outline.png";
-      user.removeRecipe(cardId);
+      allRecipes.removeRecipe(matchedRecipe, 'userFavorites');
     }
   },
+
 
   exitRecipe(element) {
     while (element.firstChild &&
@@ -198,7 +205,22 @@ const domUpdates = {
       document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
         ingredientHtml);
     });
-  }
+  },
+
+  showFavoriteRecipes(recipes, favorites, element) {
+    element.innerHTML = '';
+    favorites.forEach(recipe => {
+      // let domRecipe = document.getElementById(`${recipe.id}`);
+      // domRecipe.classList.add('hidden')  
+      let shortRecipeName = recipe.name
+      if (recipe.name.length > 40) {
+        shortRecipeName = recipe.name.substring(0, 40) + "...";
+      }
+      this.addToDom(recipe, shortRecipeName, element) 
+    })
+    this.showMyRecipesBanner();
+  },
+
 };
 
-export default domUpdates
+export default domUpdates;

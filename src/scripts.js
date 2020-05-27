@@ -1,11 +1,10 @@
-import './css/base.scss';
+import './css/base.scss'
 import './css/styles.scss';
-
 import User from './user';
 import Recipe from './recipe';
-import ApiFetch from './ApiFetch'
+import RecipeRepo from './recipeRepo';
+import ApiFetch from './ApiFetch';
 import domUpdates from './domUpdates'
-
 import './images/apple-logo-outline.png'
 import './images/apple-logo.png'
 import './images/chicken-parm.jpg'
@@ -16,31 +15,10 @@ import './images/search.png'
 import './images/seasoning.png'
 
 let api = new ApiFetch();
-
-const fetchData = () => {
-  let userData = api.getUsersData()
-  let ingredientsData = api.getIngredientsData()
-  const recipesData = api.getRecipesData();
-  
-  Promise.all([userData, ingredientsData, recipesData])
-    .then(dataSet => dataSet = {
-      usersData: dataSet[0].wcUsersData,
-      ingredientsData: dataSet[1].ingredientsData,
-      recipesData: dataSet[2].recipeData, 
-    }).then(dataSet => {
-      generateUser(dataSet.usersData, dataSet.ingredientsData);
-      createCards(dataSet.recipesData);
-      findTags(dataSet.recipesData);
-    })
-    .catch(error => console.log(error.message))
-  }
-  
-
-
 let user;
 let pantryInfo = [];
-let recipes = [];
-
+let recipeRepo;
+let recipes;
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
@@ -51,23 +29,45 @@ let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 var menuDropdown = document.querySelector(".drop-menu");
-
+let searchBar = document.querySelector(".search-bar")
 
 // ON CLICK EVENTS
 allRecipesBtn.addEventListener("click", function() {
-  domUpdates.showAllRecipes(recipes)
+  domUpdates.showAllRecipes(recipes, main)
 });
 filterBtn.addEventListener("click", function() {
   domUpdates.findCheckedBoxes(recipes)
 });
 main.addEventListener("click", function() {
-  domUpdates.addToMyRecipes(event, fullRecipeInfo, recipes, user)
+  domUpdates.addToMyRecipes(event, fullRecipeInfo, recipeRepo, user)
 });
 pantryBtn.addEventListener("click", function() {
   domUpdates.toggleMenu(menuDropdown)
 });
-savedRecipesBtn.addEventListener("click", showSavedRecipes);
+savedRecipesBtn.addEventListener("click", function() {
+  domUpdates.showFavoriteRecipes(recipes, recipeRepo.userFavorites, main)
+});
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
+searchBar.addEventListener('keyup', searchMeals);
+
+// DATA FETCH
+const fetchData = () => {
+  let userData = api.getUsersData()
+  let ingredientsData = api.getIngredientsData()
+  const recipesData = api.getRecipesData();
+  
+  Promise.all([userData, ingredientsData, recipesData])
+    .then(dataSet => dataSet = {
+      usersData: dataSet[0].wcUsersData,
+      ingredientsData: dataSet[1].ingredientsData,
+      recipeData: dataSet[2].recipeData, 
+    }).then(dataSet => {
+      generateUser(dataSet.usersData, dataSet.ingredientsData);
+      createCards(dataSet.recipeData);
+      findTags(dataSet.recipeData);
+    })
+    .catch(error => console.log(error.message))
+}
 
 // GENERATE A USER ON LOAD
 function generateUser(users, ingredients) {
@@ -78,14 +78,19 @@ function generateUser(users, ingredients) {
 
 // CREATE RECIPE CARDS
 function createCards(recipeData) {
-  recipeData.forEach(recipe => {
-    let recipeInfo = new Recipe(recipe);
-    let shortRecipeName = recipeInfo.name;
-    recipes.push(recipeInfo);
-    if (recipeInfo.name.length > 40) {
-      shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
+  recipeRepo = new RecipeRepo(recipeData);
+  recipes = recipeRepo.recipes;
+  instantiateCards(recipes);
+}
+
+function instantiateCards(allRecipes) {
+  allRecipes.forEach(singleRecipe => {
+    let recipe = new Recipe(singleRecipe) 
+    let shortRecipeName = recipe.name;
+    if (recipe.name.length > 40) {
+      shortRecipeName = recipe.name.substring(0, 40) + "...";
     }
-    domUpdates.addToDom(recipeInfo, shortRecipeName, main)
+    domUpdates.addToDom(recipe, shortRecipeName, main)
   });
 }
 
@@ -102,21 +107,6 @@ function findTags(recipeData) {
   tags.sort();
   domUpdates.listTags(tags, tagList);
 }
-
-
-// FAVORITE RECIPE FUNCTIONALITY
-
-function showSavedRecipes() {
-  let unsavedRecipes = recipes.filter(recipe => {
-    return !user.favoriteRecipes.includes(recipe.id);
-  });
-  unsavedRecipes.forEach(recipe => {
-    let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
-  });
-  domUpdates.showMyRecipesBanner();
-}
-
 
 // CREATE AND USE PANTRY
 function findPantryInfo(ingredientData) {
@@ -166,5 +156,20 @@ function findRecipesWithCheckedIngredients(selected) {
     }
   })
 }
-// ADDED FETCH AT BOTTOM 
+
+function searchMeals(event) {
+  const searchValue = event.target.value.toLowerCase();
+  main.innerHTML = " ";
+
+  let searchResults = recipeRepo.searchRecipes(searchValue)
+  
+  searchResults.forEach(recipe => {
+    let shortRecipeName = recipe.name;
+    if (recipe.name.length > 40) {
+      shortRecipeName = recipe.name.substring(0, 40) + "...";
+    }
+    domUpdates.addToDom(recipe, shortRecipeName, main)
+  })
+}
+
 fetchData()

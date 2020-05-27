@@ -9,8 +9,6 @@ describe('recipeRepo', function() {
 
   beforeEach(function() {
     recipeRepo = new RecipeRepo(recipeData);
-    recipeFavorites = new RecipeRepo();
-    recipesToCook = new RecipeRepo();
 
     recipe = recipeData[0];
     recipe1 = recipeData[1]
@@ -26,33 +24,34 @@ describe('recipeRepo', function() {
   })
 
   it('should have an array of recipes', function() {
-    expect(recipeRepo.cookBook).to.deep.equal(recipeData);
+    expect(recipeRepo.recipes).to.deep.equal(recipeData);
   })
 
   it('should start as an empty array', function() {
-    expect(recipeFavorites.cookBook).to.deep.equal([]);
+    expect(recipeFavorites.recipes).to.deep.equal([]);
   })
 
   it('should be able to add recipes to favorite recipes', function() {
-    recipeFavorites.addRecipe(recipe1);
-    recipeFavorites.addRecipe(recipe);    
-    expect(recipeFavorites.cookBook).to.deep.equal([recipe1, recipe]);
+    recipeRepo.addRecipe(recipe1, 'userFavorites');
+    recipeRepo.addRecipe(recipe, 'recipesToCook');    
+    expect(recipeRepo.userFavorites.recipes).to.deep.equal([recipe1]);
+    expect(recipeRepo.recipesToCook).to.deep.equal([recipe])
   })
 
   it('should return an empty array if no argument is given', function() {
-    recipeFavorites.addRecipe();
-    expect(recipeFavorites.cookBook).to.deep.equal([undefined]);
+    recipeRepo.addRecipe();
+    expect(recipeFavorites.recipes).to.deep.equal([undefined]);
   })
 
   it('should be able to add recipes to cook', function() {
     recipesToCook.addRecipe(recipe1);
     recipesToCook.addRecipe(recipe);    
-    expect(recipesToCook.cookBook).to.deep.equal([recipe1, recipe]);
+    expect(recipesToCook.recipes).to.deep.equal([recipe1, recipe]);
   });
 
   it('should return an empty array if no argument is given', function() {
     recipesToCook.addRecipe();
-    expect(recipesToCook.cookBook).to.deep.equal([undefined]);
+    expect(recipesToCook.recipes).to.deep.equal([undefined]);
   })
 
   it("should be able to remove a recipe", function() {
@@ -60,7 +59,7 @@ describe('recipeRepo', function() {
     recipesToCook.addRecipe(recipe1);
     recipesToCook.addRecipe(recipe2);
     recipesToCook.removeRecipe(recipe1);
-    expect(recipesToCook.cookBook).to.deep.equal([recipe, recipe2]);
+    expect(recipesToCook.recipes).to.deep.equal([recipe, recipe2]);
   });
   
   it("should not remove any recipes if no argument is given", function() {
@@ -68,7 +67,7 @@ describe('recipeRepo', function() {
     recipesToCook.addRecipe(recipe1);
     recipesToCook.addRecipe(recipe2);
     recipesToCook.removeRecipe();
-    expect(recipesToCook.cookBook).to.deep.equal([recipe, recipe1, recipe2]);
+    expect(recipesToCook.recipes).to.deep.equal([recipe, recipe1, recipe2]);
   })
 
   it('should be able to filter by a tag', function() {

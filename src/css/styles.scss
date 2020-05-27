@@ -66,12 +66,6 @@ span {
   width: 35px;
 }
 
-.search-btn {
-  border-left: 3px outset #C4EB67;
-  border-radius: 0px 15px 15px 0px;
-  padding: 1%;
-}
-
 .nav-btn {
   align-items: center;
   background: #5B7894 no-repeat;
@@ -83,7 +77,6 @@ span {
   font-weight: 700;
   justify-content: center;
   margin: 0%;
-  outline: none;
   overflow: hidden;
   text-align: center;
   transition: .4s ease;
@@ -93,23 +86,52 @@ span {
 .nav-btn:hover {
   color: #C4EB67;
   font-size: 14px;
-  text-shadow: 0px 2px 4px black;
+  text-shadow: 0px 2px 4px #000000;
   transition: .4s ease;
 }
 
-.nav-btn img {
+.nav-btn img{
   max-height: 40px;
   max-width: 40px;
   padding: 2px 0px;
 }
 
-.saved-ingredients-btn {
-  border-left: 3px solid #C4EB67;
+.search-container {
+  display: flex;
+  flex-direction: row;
+  margin: 1% 0%;
+}
+
+.search-container:hover input {
+  width: 200px;
+}
+
+.search-bar {
+  padding: 0px 0px 5px 0px;
+  width: 0px;
+  border: 0;
+  transition: all 0.3s;
+  background: #C4EB67 no-repeat;
+  color: #000000;
+  font-size: 3.3vh;
+}
+
+.search-img {
+  margin: 1% 0%;
+  padding: 2px 26px 0px 0px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.saved-ingredients-btn, .ing-pan-btn {
+  border-left: 2px solid #C4EB67;
 }
 
 .ing-pan-btn {
   margin: 1% 0%;
-  padding: 1px 6px 5px 0px;
 }
 
 
