@@ -7,7 +7,6 @@ class RecipeRepo {
 
   addRecipe(recipe, recipeGroup) {
     if (recipeGroup === 'userFavorites') {
-      // console.log(recipe)
       recipe.isFavorite = true;
     }  
     this[recipeGroup].push(recipe);

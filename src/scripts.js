@@ -108,9 +108,6 @@ function findTags(recipeData) {
   domUpdates.listTags(tags, tagList);
 }
 
-// FAVORITE RECIPE FUNCTIONALITY
-
-
 // CREATE AND USE PANTRY
 function findPantryInfo(ingredientData) {
   user.pantry.forEach(ingredient => {
@@ -175,5 +172,4 @@ function searchMeals(event) {
   })
 }
 
-// ADDED FETCH AT BOTTOM 
 fetchData()
