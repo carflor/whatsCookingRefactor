@@ -21,7 +21,7 @@ const domUpdates = {
         </div>
       </div>
       <h4>${recipeInfo.tags[0]}</h4>
-      <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      <img src=${this.checkFavoriteStatus(recipeInfo)} alt="unfilled apple icon" class="card-apple-icon">
     </div>`
     element.insertAdjacentHTML("beforeend", cardHtml);
   },
@@ -29,6 +29,10 @@ const domUpdates = {
   createShortRecipeName(recipe) {
     return (recipe.name.length > 40) ? 
       recipe.name.substring(0, 40) + "..." : recipe.name;
+  },
+
+  checkFavoriteStatus(recipe) {
+    return (recipe.isFavorite) ? "../images/apple-logo.png" : "../images/apple-logo-outline.png"
   },
 
   listTags(allTags, element) {
