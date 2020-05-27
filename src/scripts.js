@@ -45,7 +45,7 @@ pantryBtn.addEventListener("click", function() {
   domUpdates.toggleMenu(menuDropdown)
 });
 savedRecipesBtn.addEventListener("click", function() {
-  domUpdates.showFavoriteRecipes(recipes, recipeRepo.userFavorites, main)
+  domUpdates.showFavoriteRecipes(recipeRepo.userFavorites, main)
 });
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchBar.addEventListener('keyup', searchMeals);
@@ -86,11 +86,7 @@ function createCards(recipeData) {
 function instantiateCards(allRecipes) {
   allRecipes.forEach(singleRecipe => {
     let recipe = new Recipe(singleRecipe) 
-    let shortRecipeName = recipe.name;
-    if (recipe.name.length > 40) {
-      shortRecipeName = recipe.name.substring(0, 40) + "...";
-    }
-    domUpdates.addToDom(recipe, shortRecipeName, main)
+    domUpdates.addToDom(recipe, main)
   });
 }
 
@@ -160,15 +156,9 @@ function findRecipesWithCheckedIngredients(selected) {
 function searchMeals(event) {
   const searchValue = event.target.value.toLowerCase();
   main.innerHTML = " ";
-
   let searchResults = recipeRepo.searchRecipes(searchValue)
-  
   searchResults.forEach(recipe => {
-    let shortRecipeName = recipe.name;
-    if (recipe.name.length > 40) {
-      shortRecipeName = recipe.name.substring(0, 40) + "...";
-    }
-    domUpdates.addToDom(recipe, shortRecipeName, main)
+    domUpdates.addToDom(recipe, main)
   })
 }
 

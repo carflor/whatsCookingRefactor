@@ -9,7 +9,8 @@ const domUpdates = {
       welcomeMsg);
   },
 
-  addToDom(recipeInfo, shortRecipeName, element) {
+  addToDom(recipeInfo, element) {
+    let shortRecipeName = this.createShortRecipeName(recipeInfo);
     let cardHtml = `
     <div class="recipe-card" id=${recipeInfo.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
@@ -25,6 +26,11 @@ const domUpdates = {
     element.insertAdjacentHTML("beforeend", cardHtml);
   },
   
+  createShortRecipeName(recipe) {
+    return (recipe.name.length > 40) ? 
+      recipe.name.substring(0, 40) + "..." : recipe.name;
+  },
+
   listTags(allTags, element) {
     allTags.forEach(tag => {
       let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
@@ -42,11 +48,7 @@ const domUpdates = {
   showAllRecipes(allRecipes, element) {
     element.innerHTML = '';
     allRecipes.forEach(recipe => {
-      let shortRecipeName = recipe.name
-      if (recipe.name.length > 40) {
-        shortRecipeName = recipe.name.substring(0, 40) + "...";
-      }
-      this.addToDom(recipe, shortRecipeName, element)
+      this.addToDom(recipe, element)
     });
     this.showWelcomeBanner();
   },
@@ -207,16 +209,10 @@ const domUpdates = {
     });
   },
 
-  showFavoriteRecipes(recipes, favorites, element) {
+  showFavoriteRecipes(favorites, element) {
     element.innerHTML = '';
     favorites.forEach(recipe => {
-      // let domRecipe = document.getElementById(`${recipe.id}`);
-      // domRecipe.classList.add('hidden')  
-      let shortRecipeName = recipe.name
-      if (recipe.name.length > 40) {
-        shortRecipeName = recipe.name.substring(0, 40) + "...";
-      }
-      this.addToDom(recipe, shortRecipeName, element) 
+      this.addToDom(recipe, element) 
     })
     this.showMyRecipesBanner();
   },
