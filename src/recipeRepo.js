@@ -1,23 +1,35 @@
 class RecipeRepo {
   constructor(recipes) {
-    this.cookBook = (recipes) ? recipes : [];
+    this.recipes = recipes || [];
+    this.userFavorites = [];
+    this.recipes2Cook = [];
   }
 
-  addRecipe(recipe) {
-   this.cookBook.push(recipe)
-  };
+  addRecipe(recipe, recipeGroup) {
+    if (recipeGroup === 'userFavorites') {
+      // console.log(recipe)
+      recipe.isFavorite = true;
+    }  
+    this[recipeGroup].push(recipe);
+  }
 
-  removeRecipe(recipe) {
+  removeRecipe(recipe, recipeGroup) {
     if (!recipe) {
       return
     }
-    const index = this.cookBook.indexOf(recipe)
-    return this.cookBook.splice(index, 1)
+    if (recipeGroup === 'userFavorites') {
+      recipe.isFavorite = false;
+    } 
+    if (recipeGroup === 'recipes2Cook') {
+      recipe.isCooked = true;
+    }
+    const index = recipeGroup.indexOf(recipe)
+    return this[recipeGroup].splice(index, 1)
   }
 
   filterByType(tagNames) {
     let filtered = [];
-    this.cookBook.forEach(recipe => {
+    this.recipes.forEach(recipe => {
       tagNames.forEach(name => {
         if (recipe.tags.includes(name)) {
           filtered.push(recipe)
@@ -29,18 +41,18 @@ class RecipeRepo {
 
   searchRecipes(str) {
     if (!str) {
-      return this.cookBook
+      return this.recipes
     }
     const filteredMeals = [];
-    this.cookBook.forEach(meal => {
+    this.recipes.forEach(meal => {
       let mealName = meal.name.toLowerCase()
-      let mealIngredients = meal.ingredients.map(ingredient => ingredient.name).join(' ')
+      let mealIngredients = meal.ingredients.map(ingredient => ingredient.name).join(' ').toLowerCase()
       if ((mealName.includes(str) || mealIngredients.includes(str)) && !filteredMeals.includes(meal)) {
         filteredMeals.push(meal)
       }
     })
     return filteredMeals
   }
-};
+}
 
 export default RecipeRepo;

@@ -1,4 +1,4 @@
-import './css/base.scss';
+import './css/base.scss'
 import './css/styles.scss';
 import User from './user';
 import Recipe from './recipe';
@@ -19,7 +19,7 @@ let user;
 let pantryInfo = [];
 let recipeRepo;
 let recipes;
-  
+
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
@@ -31,21 +31,22 @@ let tagList = document.querySelector(".tag-list");
 var menuDropdown = document.querySelector(".drop-menu");
 let searchBar = document.querySelector(".search-bar")
 
-
 // ON CLICK EVENTS
 allRecipesBtn.addEventListener("click", function() {
-  domUpdates.showAllRecipes(recipes)
+  domUpdates.showAllRecipes(recipes, main)
 });
 filterBtn.addEventListener("click", function() {
   domUpdates.findCheckedBoxes(recipes)
 });
 main.addEventListener("click", function() {
-  domUpdates.addToMyRecipes(event, fullRecipeInfo, recipes, user)
+  domUpdates.addToMyRecipes(event, fullRecipeInfo, recipeRepo, user)
 });
 pantryBtn.addEventListener("click", function() {
   domUpdates.toggleMenu(menuDropdown)
 });
-savedRecipesBtn.addEventListener("click", showSavedRecipes);
+savedRecipesBtn.addEventListener("click", function() {
+  domUpdates.showFavoriteRecipes(recipes, recipeRepo.userFavorites, main)
+});
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchBar.addEventListener('keyup', searchMeals);
 
@@ -78,8 +79,13 @@ function generateUser(users, ingredients) {
 // CREATE RECIPE CARDS
 function createCards(recipeData) {
   recipeRepo = new RecipeRepo(recipeData);
-  recipes = recipeRepo.cookBook;
-  recipes.forEach(recipe => {
+  recipes = recipeRepo.recipes;
+  instantiateCards(recipes);
+}
+
+function instantiateCards(allRecipes) {
+  allRecipes.forEach(singleRecipe => {
+    let recipe = new Recipe(singleRecipe) 
     let shortRecipeName = recipe.name;
     if (recipe.name.length > 40) {
       shortRecipeName = recipe.name.substring(0, 40) + "...";
@@ -103,16 +109,7 @@ function findTags(recipeData) {
 }
 
 // FAVORITE RECIPE FUNCTIONALITY
-function showSavedRecipes() {
-  let unsavedRecipes = recipes.filter(recipe => {
-    return !user.favoriteRecipes.cookBook.includes(recipe.id);
-  });
-  unsavedRecipes.forEach(recipe => {
-    let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
-  });
-  domUpdates.showMyRecipesBanner();
-}
+
 
 // CREATE AND USE PANTRY
 function findPantryInfo(ingredientData) {
@@ -166,9 +163,10 @@ function findRecipesWithCheckedIngredients(selected) {
 function searchMeals(event) {
   const searchValue = event.target.value.toLowerCase();
   main.innerHTML = " ";
+
   let searchResults = recipeRepo.searchRecipes(searchValue)
   
-  searchResults.forEach( recipe => {
+  searchResults.forEach(recipe => {
     let shortRecipeName = recipe.name;
     if (recipe.name.length > 40) {
       shortRecipeName = recipe.name.substring(0, 40) + "...";
