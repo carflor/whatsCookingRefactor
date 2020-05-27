@@ -39,7 +39,7 @@ filterBtn.addEventListener("click", function() {
   domUpdates.findCheckedBoxes(recipes)
 });
 main.addEventListener("click", function() {
-  domUpdates.addToMyRecipes(event, fullRecipeInfo, recipeRepo, user)
+  domUpdates.manageCardStatus(event, fullRecipeInfo, recipeRepo)
 });
 pantryBtn.addEventListener("click", function() {
   domUpdates.toggleMenu(menuDropdown)

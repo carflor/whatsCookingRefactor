@@ -118,9 +118,10 @@ const domUpdates = {
     }).join(", ");
   },
 
-  openRecipeInfo(recipeId, element, recipes) {
+  openRecipeInfo(event, element, recipeRepo) {
+    let recipeId = parseInt(event.target.closest(".recipe-card").id);
     element.style.display = "inline";
-    let recipe = recipes.find(recipe => recipe.id == recipeId)
+    let recipe = recipeRepo.recipes.find(recipe => recipe.id == recipeId)
     this.generateRecipeTitle(recipe, this.generateIngredients(recipe), element);
     this.addRecipeImage(recipe);
     this.generateInstructions(recipe, element);
@@ -153,31 +154,19 @@ const domUpdates = {
     element.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
   },
 
-  isDescendant(parent, child) {
-    let node = child;
-    while (node !== null) {
-      if (node === parent) {
-        return true;
-      }
-      node = node.parentNode;
-    }
-    return false;
-  },
-
-  addToMyRecipes(event, element, recipes, user) {
+  manageCardStatus(event, element, recipeRepo) {
     if (event.target.className === "card-apple-icon") {
-      this.toggleAppleIcon(event, user, recipes)
+      this.toggleAppleIcon(event, recipeRepo)
     } else if (event.target.id === "exit-recipe-btn") {
       this.exitRecipe(element); 
-    } else if (this.isDescendant(event.target.closest(".recipe-card"), event.target)) {
-      let recipeId = event.target.closest(".recipe-card").id
-      this.openRecipeInfo(recipeId, element, recipes);  
+    } else {
+      this.openRecipeInfo(event, element, recipeRepo);  
     }
   },
 
-  toggleAppleIcon(event, user, allRecipes) {
-    let cardId = parseInt(event.target.closest(".recipe-card").id);
-    let matchedRecipe = allRecipes.recipes.find( recipe => recipe.id === cardId);
+  toggleAppleIcon(event, allRecipes) {
+    let recipeId = parseInt(event.target.closest(".recipe-card").id);
+    let matchedRecipe = allRecipes.recipes.find( recipe => recipe.id === recipeId);
     
     if (!allRecipes.userFavorites.includes(matchedRecipe)) {
       event.target.src = "../images/apple-logo.png";
