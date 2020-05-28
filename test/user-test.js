@@ -30,23 +30,23 @@ describe('User', function() {
     expect(user.pantry[0].ingredient).to.eq(20081);
   });
 
-  it.only('should check if recipe can be cooked', function() {
+  it('should check if recipe can be cooked', function() {
     expect(user.checkAbility2Cook(recipe)).to.be.true
   });
 
-  it.only('should check if recipe can be cooked', function() {
+  it('should check if recipe can be cooked', function() {
     let user2 = new User(users[1]);
     expect(user2.checkAbility2Cook(recipe)).to.be.false
   });
 
-  it.only('should be able to cook a recipe', function() {
+  it('should be able to cook a recipe', function() {
     user.cookRecipe(recipe);
     expect(user.pantry[0].amount).to.equal(2.5);
     expect(user.pantry[4].amount).to.equal(0);
     expect(user.pantry[12].amount).to.equal(1);
   });
 
-  it.only('should return the required ingredients if user cannot cook recipe', function() {
+  it('should return the required ingredients if user cannot cook recipe', function() {
     let user2 = new User(users[1]);
     let requiredIngredients =   [
       {name: 'egg', id: 1123, quantity: {amount: 1, unit: 'large'}},

@@ -14,7 +14,7 @@ class User {
         }
       })
     })
-    return (recipeDeets.length === recipe.ingredients.length)
+    return (recipeDeets.length == recipe.ingredients.length) 
   }
 
   cookRecipe(recipe) {
@@ -45,4 +45,24 @@ class User {
   }
 
 export default User;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

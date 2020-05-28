@@ -14,6 +14,7 @@ import './images/pancakes.jpg'
 import './images/search.png'
 import './images/seasoning.png'
 import './images/cooking-icon-300x300.png'
+import './images/cooking-icon-outline.png'
 
 let api = new ApiFetch();
 let user;
@@ -89,9 +90,11 @@ function createCards(recipeData) {
 }
 
 function instantiateCards(allRecipes) {
+  console.log('card display:', user instanceof User)
   allRecipes.forEach(singleRecipe => {
     let recipe = new Recipe(singleRecipe) 
-    domUpdates.addToDom(recipe, main)
+    console.log(user.checkAbility2Cook(recipe))
+    domUpdates.addToDom(recipe, main, user.checkAbility2Cook(recipe))
   });
 }
 

@@ -9,7 +9,7 @@ class Recipe {
     this.ingredients = recipe.ingredients;
     this.instructions = recipe.instructions;
     this.isFavorite = false;
-    this.isCooked = false; 
+    // this.isCooked = false; 
   }
 
   calculateIngredientsCost() { 
