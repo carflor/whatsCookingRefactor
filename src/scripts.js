@@ -31,6 +31,10 @@ let tagList = document.querySelector(".tag-list");
 var menuDropdown = document.querySelector(".drop-menu");
 let searchBar = document.querySelector(".search-bar")
 
+//POST 
+let postForm = document.querySelector(".add-ingredients-btn")
+postForm.addEventListener("click", domUpdates.displayIngredientForm)
+
 // ON CLICK EVENTS
 allRecipesBtn.addEventListener("click", function() {
   domUpdates.showAllRecipes(recipes, main)

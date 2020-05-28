@@ -275,6 +275,7 @@ main {
 
 /* BUTTONS */
 .show-pantry-recipes-btn,
+.add-ingredients-btn,
 .show-all-btn,
 .filter-btn {
   background-color: #359567;
@@ -288,7 +289,8 @@ main {
   padding: 5px 10px 5px 10px;
 }
 
-.show-pantry-recipes-btn {
+.show-pantry-recipes-btn,
+.add-ingredients-btn {
   margin-top: 10px;
 }
 
