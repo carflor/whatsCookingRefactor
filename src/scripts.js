@@ -13,6 +13,7 @@ import './images/green-apples.jpg'
 import './images/pancakes.jpg'
 import './images/search.png'
 import './images/seasoning.png'
+import './images/cooking-icon-300x300.png'
 
 let api = new ApiFetch();
 let user;
@@ -30,6 +31,10 @@ let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 var menuDropdown = document.querySelector(".drop-menu");
 let searchBar = document.querySelector(".search-bar")
+
+//POST EVENT LISTENER AND QUERY SELECTOR
+let postForm = document.querySelector(".add-ingredients-btn")
+postForm.addEventListener("click", domUpdates.displayIngredientForm)
 
 // ON CLICK EVENTS
 allRecipesBtn.addEventListener("click", function() {
