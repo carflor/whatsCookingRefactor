@@ -49,11 +49,12 @@ describe('User', function() {
   it.only('should return the required ingredients if user cannot cook recipe', function() {
     let user2 = new User(users[1]);
     let requiredIngredients =   [
-      {name: 'egg', id: 1123, requiredQuantity: 1},
-      {name: 'granulated sugar', id: 19335, requiredQuantity: 0.5 },
-      {name: 'instant vanilla pudding mix', id: 19206, requiredQuantity: 2},
-      {name: 'light brown sugar', id: 19334, requiredQuantity: 0.5 },
-      {name: 'salt', id: 2047, requiredQuantity: 0.5}
+      {name: 'egg', id: 1123, quantity: {amount: 1, unit: 'large'}},
+      {name: 'granulated sugar', id: 19335, quantity: {amount: 0.5, unit: 'c'}},
+      {name: 'instant vanilla pudding mix', id: 19206, quantity: {amount: 2, unit: 'Tbsp'}},
+      {name: 'light brown sugar', id: 19334, quantity: {amount: 0.5, unit: 'c'}},
+      {name: 'salt', id: 2047, quantity: {amount: 0.5, unit: 'tsp'}},
+      {name: 'sea salt', id: 1012047, quantity: { amount: 22, unit: 'servings' }}
     ]
     expect(user2.findRequiredIngredients(recipe)).to.deep.equal(requiredIngredients);
   });

@@ -70,6 +70,14 @@ let users = [
         "amount": 3
       },
       {
+        "ingredient": 20081,
+        "amount": 4
+      },
+      {
+        "ingredient": 18372,
+        "amount": 3
+      },
+      {
         "ingredient": 19206,
         "amount": 1
       },

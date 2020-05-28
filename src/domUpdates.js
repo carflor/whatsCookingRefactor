@@ -124,7 +124,7 @@ const domUpdates = {
     let recipe = recipeRepo.recipes.find(recipe => recipe.id == recipeId)
     this.generateRecipeTitle(recipe, this.generateIngredients(recipe), element);
     this.generateInstructions(recipe, element);
-    element.insertAdjacentHTML("beforebegin", "<section id='overlay'></section>");
+    element.insertAdjacentHTML("beforebegin", "<section class='overlay'></section>");
   },
   
   generateRecipeTitle(recipe, ingredients, element) {
