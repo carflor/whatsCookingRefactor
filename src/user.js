@@ -16,15 +16,17 @@ class User {
         }
       })
     })
-    return (recipeDeets.length != recipe.ingredients.length) ? false : true;
+    return (recipeDeets.length === recipe.ingredients.length)
   }
 
   cookRecipe(recipe) {
     // if(this.checkAbility2Cook(recipe)) {
-      recipe.ingredients.forEach( ingredient => {
-       this.pantry.find(ing => ing.indredient === ingredient.id).amount - ingredient.quantity.amount;
+      if(this.checkAbility2Cook(recipe)) {
+        recipe.ingredients.map( ingredient => {
+          let index = this.pantry.findIndex( ing => ing.ingredient === ingredient.id) 
+          this.pantry[index].amount -= ingredient.quantity.amount
+        })
       }
-      )
     }
     // if user is able to cook recipe, it should subtract the required recipe 
     // ingredients from user pantry 
@@ -32,18 +34,28 @@ class User {
   // }
 
   findRequiredIngredients(recipe) {
-    // if user cannot cook recipe, this should find the required ingredients the user
+    // if user cannot cook recipe, this should find the required ingredients AND Amount the user
     //  needs to add to their pantry in order to cook recipe
     // compare pantry to ingredients on id
     // return missing ingredients
-    if(!this.checkAbility2Cook(recipe)) {
-      recipe.ingredients.filter(ingredient => {
-        //console.log(this.pantry.id, 'pantry');
-        //console.log(ingredient)
-        //return this.pantry.includes(ingredient.id)
-      })
+  
+    if (!this.checkAbility2Cook(recipe)) {
+      let missingIngs = recipe.ingredients.reduce((acc, ingredient) => {
+        const index = this.pantry.findIndex( ing => ing.ingredient === ingredient.id)
+        let item = this.pantry[index]
+          if (index === -1) {
+            acc.push(ingredient)
+          } else if (item.ingredient === ingredient.id && item.amount < ingredient.quantity.amount){
+            ingredient.quantity.amount -= item.amount;
+            acc.push(ingredient)
+          }
+        return acc;
+      }, [])
+      return missingIngs
+      }
     }
   }
-}
+
+
 
 export default User;
