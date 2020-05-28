@@ -32,7 +32,7 @@ const domUpdates = {
   },
 
   checkFavoriteStatus(recipe) {
-    return (recipe.isFavorite) ? "../images/apple-logo.png" : "../images/apple-logo-outline.png"
+    return (recipe.isFavorite) ? "../images/apple-logo.png" : "../images/apple-logo-outline.png";
   },
 
   listTags(allTags, element) {
@@ -113,7 +113,7 @@ const domUpdates = {
   },
 
   generateIngredients(recipe) {
-    return recipe && recipe.ingredients.map(i => {
+    return recipe.ingredients.map(i => {
       return `${this.capitalize(recipe.name)} (${i.quantity.amount} ${i.quantity.unit})`
     }).join(", ");
   },
@@ -123,23 +123,17 @@ const domUpdates = {
     element.style.display = "inline";
     let recipe = recipeRepo.recipes.find(recipe => recipe.id == recipeId)
     this.generateRecipeTitle(recipe, this.generateIngredients(recipe), element);
-    this.addRecipeImage(recipe);
     this.generateInstructions(recipe, element);
-    element.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+    element.insertAdjacentHTML("beforebegin", "<section id='overlay'></section>");
   },
-
-
+  
   generateRecipeTitle(recipe, ingredients, element) {
     let recipeTitle = `
-      <button id="exit-recipe-btn">X</button>
-      <h3 id="recipe-title">${recipe.name}</h3>
-      <h4>Ingredients</h4>
-      <p>${ingredients}</p>`
+    <button id="exit-recipe-btn">X</button>
+    <h3 id="recipe-title" style= "background-image:url(${recipe.image})">${recipe.name}</h3>
+    <h4>Ingredients</h4>
+    <p>${ingredients}</p>`
     element.insertAdjacentHTML("beforeend", recipeTitle);
-  },
-
-  addRecipeImage(recipe) {
-    document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
   },
 
   generateInstructions(recipe, element) {
@@ -168,15 +162,16 @@ const domUpdates = {
     let recipeId = parseInt(event.target.closest(".recipe-card").id);
     let matchedRecipe = allRecipes.recipes.find( recipe => recipe.id === recipeId);
     
-    if (!allRecipes.userFavorites.includes(matchedRecipe)) {
-      event.target.src = "../images/apple-logo.png";
+    if (!matchedRecipe.isFavorite) {
       allRecipes.addRecipe(matchedRecipe, 'userFavorites');
+      // console.log("add:", allRecipes.userFavorites)
+      event.target.src = "../images/apple-logo.png";
     } else {
       event.target.src = "../images/apple-logo-outline.png";
       allRecipes.removeRecipe(matchedRecipe, 'userFavorites');
+      console.log("remove:", allRecipes.userFavorites)
     }
   },
-
 
   exitRecipe(element) {
     while (element.firstChild &&

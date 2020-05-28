@@ -4,11 +4,45 @@ class User {
   constructor(user) {
     this.id = user.id;
     this.name = user.name;
-    this.pantry = user.pantry;
+    this.pantry = user.pantry
   }
 
-  decideToCook(recipe) {
-    this.recipesToCook.push(recipe);
+  checkAbility2Cook(recipe) {
+    let recipeDeets = [];
+    recipe.ingredients.forEach(ingredient => {
+      this.pantry.forEach(item => {
+        if(item.ingredient === ingredient.id && item.amount >= ingredient.quantity.amount) {
+          recipeDeets.push(ingredient)
+        }
+      })
+    })
+    return (recipeDeets.length != recipe.ingredients.length) ? false : true;
+  }
+
+  cookRecipe(recipe) {
+    // if(this.checkAbility2Cook(recipe)) {
+      recipe.ingredients.forEach( ingredient => {
+       this.pantry.find(ing => ing.indredient === ingredient.id).amount - ingredient.quantity.amount;
+      }
+      )
+    }
+    // if user is able to cook recipe, it should subtract the required recipe 
+    // ingredients from user pantry 
+    // other wise it should return the missing ingredients
+  // }
+
+  findRequiredIngredients(recipe) {
+    // if user cannot cook recipe, this should find the required ingredients the user
+    //  needs to add to their pantry in order to cook recipe
+    // compare pantry to ingredients on id
+    // return missing ingredients
+    if(!this.checkAbility2Cook(recipe)) {
+      recipe.ingredients.filter(ingredient => {
+        //console.log(this.pantry.id, 'pantry');
+        //console.log(ingredient)
+        //return this.pantry.includes(ingredient.id)
+      })
+    }
   }
 }
 

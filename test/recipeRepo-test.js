@@ -4,7 +4,7 @@ import RecipeRepo from '../src/recipeRepo';
 import recipeData from '../src/data/recipe-data';
 
 
-describe('recipeRepo', function() {
+describe.skip('recipeRepo', function() {
   let recipeRepo, recipe, recipe1, recipe2, recipeFavorites, recipesToCook;
 
   beforeEach(function() {
