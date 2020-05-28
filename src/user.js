@@ -14,6 +14,8 @@ class User {
         }
       })
     })
+    console.log(recipeDeets.length, 'length deets')
+    console.log(recipe.ingredients.length, 'length recipes')
     return (recipeDeets.length == recipe.ingredients.length) 
   }
 
@@ -45,6 +47,7 @@ class User {
   }
 
 export default User;
+
 
 
 
