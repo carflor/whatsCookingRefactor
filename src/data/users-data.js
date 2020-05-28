@@ -33,7 +33,7 @@ let users = [
       },
       {
         "ingredient": 1012047,
-        "amount": 2
+        "amount": 39
       },
       {
         "ingredient": 10019903,

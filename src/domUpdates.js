@@ -9,7 +9,8 @@ const domUpdates = {
       welcomeMsg);
   },
 
-  addToDom(recipeInfo, shortRecipeName, element) {
+  addToDom(recipeInfo, element) {
+    let shortRecipeName = this.createShortRecipeName(recipeInfo);
     let cardHtml = `
     <div class="recipe-card" id=${recipeInfo.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
@@ -20,11 +21,20 @@ const domUpdates = {
         </div>
       </div>
       <h4>${recipeInfo.tags[0]}</h4>
-      <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      <img src=${this.checkFavoriteStatus(recipeInfo)} alt="unfilled apple icon" class="card-apple-icon">
     </div>`
     element.insertAdjacentHTML("beforeend", cardHtml);
   },
   
+  createShortRecipeName(recipe) {
+    return (recipe.name.length > 40) ? 
+      recipe.name.substring(0, 40) + "..." : recipe.name;
+  },
+
+  checkFavoriteStatus(recipe) {
+    return (recipe.isFavorite) ? "../images/apple-logo.png" : "../images/apple-logo-outline.png";
+  },
+
   listTags(allTags, element) {
     allTags.forEach(tag => {
       let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
@@ -42,11 +52,7 @@ const domUpdates = {
   showAllRecipes(allRecipes, element) {
     element.innerHTML = '';
     allRecipes.forEach(recipe => {
-      let shortRecipeName = recipe.name
-      if (recipe.name.length > 40) {
-        shortRecipeName = recipe.name.substring(0, 40) + "...";
-      }
-      this.addToDom(recipe, shortRecipeName, element)
+      this.addToDom(recipe, element)
     });
     this.showWelcomeBanner();
   },
@@ -107,32 +113,27 @@ const domUpdates = {
   },
 
   generateIngredients(recipe) {
-    return recipe && recipe.ingredients.map(i => {
+    return recipe.ingredients.map(i => {
       return `${this.capitalize(recipe.name)} (${i.quantity.amount} ${i.quantity.unit})`
     }).join(", ");
   },
 
-  openRecipeInfo(recipeId, element, recipes) {
+  openRecipeInfo(event, element, recipeRepo) {
+    let recipeId = parseInt(event.target.closest(".recipe-card").id);
     element.style.display = "inline";
-    let recipe = recipes.find(recipe => recipe.id == recipeId)
+    let recipe = recipeRepo.recipes.find(recipe => recipe.id == recipeId)
     this.generateRecipeTitle(recipe, this.generateIngredients(recipe), element);
-    this.addRecipeImage(recipe);
     this.generateInstructions(recipe, element);
-    element.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+    element.insertAdjacentHTML("beforebegin", "<section id='overlay'></section>");
   },
-
-
+  
   generateRecipeTitle(recipe, ingredients, element) {
     let recipeTitle = `
-      <button id="exit-recipe-btn">X</button>
-      <h3 id="recipe-title">${recipe.name}</h3>
-      <h4>Ingredients</h4>
-      <p>${ingredients}</p>`
+    <button id="exit-recipe-btn">X</button>
+    <h3 id="recipe-title" style= "background-image:url(${recipe.image})">${recipe.name}</h3>
+    <h4>Ingredients</h4>
+    <p>${ingredients}</p>`
     element.insertAdjacentHTML("beforeend", recipeTitle);
-  },
-
-  addRecipeImage(recipe) {
-    document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
   },
 
   generateInstructions(recipe, element) {
@@ -147,41 +148,30 @@ const domUpdates = {
     element.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
   },
 
-  isDescendant(parent, child) {
-    let node = child;
-    while (node !== null) {
-      if (node === parent) {
-        return true;
-      }
-      node = node.parentNode;
-    }
-    return false;
-  },
-
-  addToMyRecipes(event, element, recipes, user) {
+  manageCardStatus(event, element, recipeRepo) {
     if (event.target.className === "card-apple-icon") {
-      this.toggleAppleIcon(event, user, recipes)
+      this.toggleAppleIcon(event, recipeRepo)
     } else if (event.target.id === "exit-recipe-btn") {
       this.exitRecipe(element); 
-    } else if (this.isDescendant(event.target.closest(".recipe-card"), event.target)) {
-      let recipeId = event.target.closest(".recipe-card").id
-      this.openRecipeInfo(recipeId, element, recipes);  
+    } else {
+      this.openRecipeInfo(event, element, recipeRepo);  
     }
   },
 
-  toggleAppleIcon(event, user, allRecipes) {
-    let cardId = parseInt(event.target.closest(".recipe-card").id);
-    let matchedRecipe = allRecipes.recipes.find( recipe => recipe.id === cardId);
+  toggleAppleIcon(event, allRecipes) {
+    let recipeId = parseInt(event.target.closest(".recipe-card").id);
+    let matchedRecipe = allRecipes.recipes.find( recipe => recipe.id === recipeId);
     
-    if (!allRecipes.userFavorites.includes(matchedRecipe)) {
-      event.target.src = "../images/apple-logo.png";
+    if (!matchedRecipe.isFavorite) {
       allRecipes.addRecipe(matchedRecipe, 'userFavorites');
+      // console.log("add:", allRecipes.userFavorites)
+      event.target.src = "../images/apple-logo.png";
     } else {
       event.target.src = "../images/apple-logo-outline.png";
       allRecipes.removeRecipe(matchedRecipe, 'userFavorites');
+      console.log("remove:", allRecipes.userFavorites)
     }
   },
-
 
   exitRecipe(element) {
     while (element.firstChild &&
@@ -207,16 +197,10 @@ const domUpdates = {
     });
   },
 
-  showFavoriteRecipes(recipes, favorites, element) {
+  showFavoriteRecipes(favorites, element) {
     element.innerHTML = '';
     favorites.forEach(recipe => {
-      // let domRecipe = document.getElementById(`${recipe.id}`);
-      // domRecipe.classList.add('hidden')  
-      let shortRecipeName = recipe.name
-      if (recipe.name.length > 40) {
-        shortRecipeName = recipe.name.substring(0, 40) + "...";
-      }
-      this.addToDom(recipe, shortRecipeName, element) 
+      this.addToDom(recipe, element) 
     })
     this.showMyRecipesBanner();
   },
