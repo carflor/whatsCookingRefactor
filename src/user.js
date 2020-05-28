@@ -16,16 +16,17 @@ class User {
         }
       })
     })
-    return (recipeDeets.length != recipe.ingredients.length) ? false : true;
+    return (recipeDeets.length === recipe.ingredients.length)
   }
 
   cookRecipe(recipe) {
-    // if(this.checkAbility2Cook(recipe)) {
+    if(this.checkAbility2Cook(recipe)) {
       recipe.ingredients.forEach( ingredient => {
-       this.pantry.find(ing => ing.indredient === ingredient.id).amount - ingredient.quantity.amount;
-      }
-      )
+        let index = this.pantry.findIndex( ing => ing.ingredient === ingredient.id) 
+        this.pantry[index].amount -= ingredient.quantity.amount
+      })
     }
+  }
     // if user is able to cook recipe, it should subtract the required recipe 
     // ingredients from user pantry 
     // other wise it should return the missing ingredients

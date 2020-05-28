@@ -22,7 +22,7 @@ class RecipeRepo {
     if (recipeGroup === 'recipes2Cook') {
       recipe.isCooked = true;
     }
-    const index = recipeGroup.indexOf(recipe)
+    const index = recipeGroup.findIndex(recipe)
     return this[recipeGroup].splice(index, 1)
   }
 
