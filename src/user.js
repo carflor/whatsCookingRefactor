@@ -1,5 +1,3 @@
-import RecipeRepo from '../src/RecipeRepo'
-
 class User {
   constructor(user) {
     this.id = user.id;
@@ -28,17 +26,8 @@ class User {
         })
       }
     }
-    // if user is able to cook recipe, it should subtract the required recipe 
-    // ingredients from user pantry 
-    // other wise it should return the missing ingredients
-  // }
 
   findRequiredIngredients(recipe) {
-    // if user cannot cook recipe, this should find the required ingredients AND Amount the user
-    //  needs to add to their pantry in order to cook recipe
-    // compare pantry to ingredients on id
-    // return missing ingredients
-  
     if (!this.checkAbility2Cook(recipe)) {
       let missingIngs = recipe.ingredients.reduce((acc, ingredient) => {
         const index = this.pantry.findIndex( ing => ing.ingredient === ingredient.id)
@@ -55,7 +44,5 @@ class User {
       }
     }
   }
-
-
 
 export default User;
