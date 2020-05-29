@@ -20,24 +20,24 @@ class ApiFetch {
 
   // FOR POSTING ADDITIONS POSITIVE NUMBERS - NEGATIVE NUMBERS WILL MAKE DELETIONS
 
-  // postIngredientsData(userId, ingredientID, ingredientModification) {
-    // let ingredientObj = {
-    // "userId": 50,
-    // "ingredientID": 123,
-    // "ingredientModification": 3
-    // }
+  postIngredientsData(userId, ingredientID, ingQuantity) {
+    let ingredientObj = {
+      "userId": Number(userId),
+      "ingredientID": Number(ingredientID),
+      "ingredientModification": Number(ingQuantity)
+    }
 
-  //   let url = `${this.rootUrl}/ingredients/ingredientsData`;
-  //   return fetch(url, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(ingredientObj),
-  //   })
-  //     .then(response => console.log(response.json()))
-  //     .catch(err => console.log(err.message));
-  // }
+    let url = `${this.rootUrl}/ingredients/ingredientsData`;
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(ingredientObj),
+    })
+      .then(response => console.log(response.json()))
+      .catch(err => console.log(err.message));
+  }
 }
 
 export default ApiFetch;
