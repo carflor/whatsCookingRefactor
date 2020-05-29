@@ -13,6 +13,8 @@ import './images/green-apples.jpg'
 import './images/pancakes.jpg'
 import './images/search.png'
 import './images/seasoning.png'
+import './images/cooking-icon-300x300.png'
+import './images/cooking-icon-outline.png'
 
 let api = new ApiFetch();
 let user;
@@ -31,7 +33,7 @@ let tagList = document.querySelector(".tag-list");
 var menuDropdown = document.querySelector(".drop-menu");
 let searchBar = document.querySelector(".search-bar")
 
-//POST 
+//POST EVENT LISTENER AND QUERY SELECTOR
 let postForm = document.querySelector(".add-ingredients-btn")
 postForm.addEventListener("click", domUpdates.displayIngredientForm)
 
@@ -88,9 +90,11 @@ function createCards(recipeData) {
 }
 
 function instantiateCards(allRecipes) {
+  console.log('card display:', user instanceof User)
   allRecipes.forEach(singleRecipe => {
     let recipe = new Recipe(singleRecipe) 
-    domUpdates.addToDom(recipe, main)
+    console.log(user.checkAbility2Cook(recipe))
+    domUpdates.addToDom(recipe, main, user.checkAbility2Cook(recipe))
   });
 }
 

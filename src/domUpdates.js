@@ -1,3 +1,5 @@
+import user from './scripts'
+
 const domUpdates = {
   createUserDisplay(user) {
     let firstName = user.name.split(" ")[0];
@@ -9,7 +11,7 @@ const domUpdates = {
       welcomeMsg);
   },
 
-  addToDom(recipeInfo, element) {
+  addToDom(recipeInfo, element, boolean) {
     let shortRecipeName = this.createShortRecipeName(recipeInfo);
     let cardHtml = `
     <div class="recipe-card" id=${recipeInfo.id}>
@@ -22,6 +24,7 @@ const domUpdates = {
       </div>
       <h4>${recipeInfo.tags[0]}</h4>
       <img src=${this.checkFavoriteStatus(recipeInfo)} alt="unfilled apple icon" class="card-apple-icon">
+      <img src=${this.choosePotDisplay(boolean)} alt="pot for ingredients" class="ingredient-pot-icon">
     </div>`
     element.insertAdjacentHTML("beforeend", cardHtml);
   },
@@ -33,6 +36,11 @@ const domUpdates = {
 
   checkFavoriteStatus(recipe) {
     return (recipe.isFavorite) ? "../images/apple-logo.png" : "../images/apple-logo-outline.png";
+  },
+
+  choosePotDisplay(boolean) {   
+    
+    return (boolean) ? "./images/cooking-icon-300x300.png" : "./images/cooking-icon-outline.png";
   },
 
   listTags(allTags, element) {
@@ -175,9 +183,9 @@ const domUpdates = {
 
   exitRecipe(element) {
     while (element.firstChild &&
-      element.removeChild(element.firstChild));
+    element.removeChild(element.firstChild));
     element.style.display = "none";
-    document.getElementById("overlay").remove();
+    document.querySelector(".overlay").remove();
   },
 
   toggleMenu(menu) {

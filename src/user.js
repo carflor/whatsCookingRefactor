@@ -14,11 +14,12 @@ class User {
         }
       })
     })
-    return (recipeDeets.length === recipe.ingredients.length)
+    console.log(recipeDeets.length, 'length deets')
+    console.log(recipe.ingredients.length, 'length recipes')
+    return (recipeDeets.length == recipe.ingredients.length) 
   }
 
   cookRecipe(recipe) {
-    // if(this.checkAbility2Cook(recipe)) {
       if(this.checkAbility2Cook(recipe)) {
         recipe.ingredients.map( ingredient => {
           let index = this.pantry.findIndex( ing => ing.ingredient === ingredient.id) 
@@ -46,3 +47,25 @@ class User {
   }
 
 export default User;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
