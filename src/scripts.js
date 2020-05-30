@@ -41,6 +41,7 @@ postForm.addEventListener("click", function() {
   let submitBtn = document.querySelector(".submit-btn")
   submitBtn.addEventListener("click", function() {
     postIngredient(user)
+    redisplayPantryInfo(user);
   })
 });
 
@@ -189,9 +190,29 @@ function postIngredient(user) {
       "ingredientID": finder.id,
       "ingredientModification": ingQuantity,
     }
-    console.log(ingredientObj)
+    // console.log(ingredientObj)
     api.postIngredientsData(ingredientObj)
+    // domUpdates.displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
   }
+}
+
+function redisplayPantryInfo(user) {
+  console.log(user.pantry, "before promise")
+  let findUser = (userData) => userData.find(oldU => oldU.id === user.id)
+  // let newPantry;
+  let newUserData = api.getUsersData()
+    .then(data => data = {
+      userData: data.wcUsersData
+    })
+    .then(data => data = {
+      user: findUser(data.userData)
+    })
+    .then(data => data = {
+      pantry: data.user.pantry
+    })
+  console.log(newUserData, 'promise')
+ 
+  
 }
 
 fetchData()
