@@ -216,7 +216,7 @@ const domUpdates = {
   displayIngredientForm() {
     const pantryForm = 
     `<section class="pantry-form">
-      <form method="post">
+      <form class="ing-form "method="post">
         <h4>Add Ingredients Here</h4>
         <section class="container">
         <label for="ingredient">Ingredient</label>

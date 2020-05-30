@@ -18,16 +18,8 @@ class ApiFetch {
     return fetch(url).then(response => response.json())
   }
 
-  // FOR POSTING ADDITIONS POSITIVE NUMBERS - NEGATIVE NUMBERS WILL MAKE DELETIONS
-
-  postIngredientsData(userId, ingredientID, ingQuantity) {
-    let ingredientObj = {
-      "userId": Number(userId),
-      "ingredientID": Number(ingredientID),
-      "ingredientModification": Number(ingQuantity)
-    }
-
-    let url = `${this.rootUrl}/ingredients/ingredientsData`;
+  postIngredientsData(ingredientObj) {
+    let url = `${this.rootUrl}/users/wcUsersData`;
     return fetch(url, {
       method: 'POST',
       headers: {

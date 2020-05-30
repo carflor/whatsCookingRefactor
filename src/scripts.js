@@ -1,6 +1,6 @@
 import './css/base.scss'
 import './css/styles.scss';
-import User from './user';
+import User from './user'; 
 import Recipe from './recipe';
 import RecipeRepo from './recipeRepo';
 import ApiFetch from './ApiFetch';
@@ -21,6 +21,7 @@ let user;
 let pantryInfo = [];
 let recipeRepo;
 let recipes;
+let allIngredients;
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
@@ -35,7 +36,14 @@ let searchBar = document.querySelector(".search-bar")
 
 //POST EVENT LISTENER AND QUERY SELECTOR
 let postForm = document.querySelector(".add-ingredients-btn")
-postForm.addEventListener("click", domUpdates.displayIngredientForm)
+postForm.addEventListener("click", function() {
+  domUpdates.displayIngredientForm()
+  let submitBtn = document.querySelector(".submit-btn")
+  submitBtn.addEventListener("click", function() {
+    postIngredient(user)
+  })
+});
+
 
 // ON CLICK EVENTS
 allRecipesBtn.addEventListener("click", function() {
@@ -77,7 +85,9 @@ const fetchData = () => {
 
 // GENERATE A USER ON LOAD
 function generateUser(users, ingredients) {
-  user = new User(users[Math.floor(Math.random() * users.length)]);
+  // user = new User(users[Math.floor(Math.random() * users.length)]);
+  user = new User(users[1])
+  allIngredients = ingredients;
   findPantryInfo(ingredients);
   domUpdates.createUserDisplay(user);
 }
@@ -90,10 +100,8 @@ function createCards(recipeData) {
 }
 
 function instantiateCards(allRecipes) {
-  console.log('card display:', user instanceof User)
   allRecipes.forEach(singleRecipe => {
     let recipe = new Recipe(singleRecipe) 
-    console.log(user.checkAbility2Cook(recipe))
     domUpdates.addToDom(recipe, main, user.checkAbility2Cook(recipe))
   });
 }
@@ -168,6 +176,22 @@ function searchMeals(event) {
   searchResults.forEach(recipe => {
     domUpdates.addToDom(recipe, main)
   })
+}
+
+function postIngredient(user) {
+  let ingName = document.getElementById('ingredient').value 
+  let finder = allIngredients.find(ing => ing.name === ingName)
+  let ingQuantity = Number(document.getElementById('ingredient-quantity').value)
+  
+  if (finder && typeof ingQuantity === 'number') {
+    let ingredientObj = {
+      "userID": user.id,
+      "ingredientID": finder.id,
+      "ingredientModification": ingQuantity,
+    }
+    console.log(ingredientObj)
+    api.postIngredientsData(ingredientObj)
+  }
 }
 
 fetchData()
