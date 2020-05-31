@@ -1,9 +1,10 @@
-$background: #5B7894;
+$background: complement(rgba(254, 97, 0, .3));
 $white: #fff;
-$green: #C4EB67;
-$dark-green: #359567;
+$green: rgb(254, 97, 0);
+$orange: rgb(254, 97, 0);
+$dark-green: rgb(254, 97, 0);
 $black: #000;
-$hover: #84C8A4;
+$hover: rgb(254, 97, 0);
 $alt-background: #DAE4EE;
 
 
@@ -11,3 +12,5 @@ $alt-background: #DAE4EE;
   display: flex;
   flex-direction: $direction;
 }
+
+
