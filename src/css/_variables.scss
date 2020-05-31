@@ -1,0 +1,13 @@
+$background: #5B7894;
+$white: #fff;
+$green: #C4EB67;
+$dark-green: #359567;
+$black: #000;
+$hover: #84C8A4;
+$alt-background: #DAE4EE;
+
+
+@mixin flexin($direction) {
+  display: flex;
+  flex-direction: $direction;
+}

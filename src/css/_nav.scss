@@ -1,0 +1,125 @@
+h1 {
+  align-self: center;
+  color: $white;
+  font-family: "Sulphur Point", sans-serif;
+  font-size: 50px;
+  margin: 0%;
+  padding: 0.5% 0.7% 0%;
+  width: 70%;
+}
+
+header {
+  @include flexin(row)
+  grid-area: header;
+  padding: 0% 0%;
+  width: 100%;
+}
+
+span {
+  color: $green;
+  font-weight: 400;
+}
+
+.header-apple-icon {
+  height: 40px;
+  margin-left: 5px;
+  width: 35px;
+}
+
+.nav-btn {
+  align-items: center;
+  background: $background no-repeat;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-size: 0px;
+  font-weight: 700;
+  justify-content: center;
+  margin: 0%;
+  overflow: hidden;
+  text-align: center;
+  transition: .4s ease;
+  width: 15%;
+  &:hover, &:focus {
+    color: $green;
+    font-size: 14px;
+    text-shadow: 0px 2px 4px $black;
+    transition: .4s ease;
+  }
+}
+
+.nav-btn img{
+  max-height: 40px;
+  max-width: 40px;
+  padding: 2px 0px;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: row;
+  margin: 1% 0%;
+  &:hover, &:focus {
+    input {
+      width: 200px;
+    }
+  }
+}
+
+.search-bar {
+  padding: 0px 0px 5px 0px;
+  width: 0px;
+  border: 0;
+  transition: all 0.3s;
+  background: $green no-repeat;
+  color: $black;
+  font-size: 3.3vh;
+}
+
+.search-img {
+  margin: 1% 0%;
+  padding: 2px 26px 0px 0px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.saved-ingredients-btn, .ing-pan-btn {
+  border-left: 2px solid $green;
+}
+
+.ing-pan-btn {
+  margin: 1% 0%;
+}
+
+/* BUTTONS */
+.show-pantry-recipes-btn,
+.add-ingredients-btn,
+.show-all-btn,
+.filter-btn {
+  background-color: $dark-green;
+  border: 0;
+  border-radius: 3px;
+  color: $white;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-size: 12pt;
+  font-weight: bold;
+  padding: 5px 10px 5px 10px;
+  &:hover, &:focus {
+    background-color: $hover;
+  }
+}
+
+.show-pantry-recipes-btn,
+.add-ingredients-btn {
+  margin-top: 10px;
+}
+
+.show-all-btn {
+  height: 40px;
+  margin-top: 20px;
+  width: 200px;
+}

@@ -1,0 +1,71 @@
+h2 {
+  color: #84C8A4;
+  margin: 10px 0px 10px 0px;
+}
+
+main {
+  grid-area: main;
+  @include flexin(row)
+  // display: flex;
+  // flex-direction: row;
+  justify-content: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
+
+/* BANNER IMAGE*/
+.banner-image {
+  background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),url("../images/green-apples.jpg");
+  grid-area: image;
+  height: 150px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.my-recipes-banner,
+.welcome-msg {
+  text-align: center;
+  width: 95%;
+}
+
+.my-recipes-banner h1,
+.welcome-msg h1 {
+  color: white;
+  width: 100%;
+}
+
+.my-recipes-banner {
+  display: none;
+  margin-top: 25px;
+}
+
+.welcome-msg {
+  margin-top: 50px;
+}
+
+/* FILTER SIDEBAR */
+aside {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  height: auto;
+  text-align: center;
+}
+
+.wrap {
+  background-color: white;
+  height: 100vh;
+  padding: 10px;
+  position: relative;
+  width: 200px;
+}
+
+ul {
+  list-style-type: none;
+  text-align: left;
+  padding-left: 35px;
+}
+
+li {
+  margin: 2px;
+}
