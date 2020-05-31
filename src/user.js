@@ -9,24 +9,24 @@ class User {
     let recipeDeets = [];
     recipe.ingredients.forEach(ingredient => {
       this.pantry.forEach(item => {
-        if(item.ingredient === ingredient.id && item.amount >= ingredient.quantity.amount) {
+        if (item.ingredient === ingredient.id && item.amount >= ingredient.quantity.amount) {
           recipeDeets.push(ingredient)
         }
       })
     })
-    console.log(recipeDeets.length, 'length deets')
-    console.log(recipe.ingredients.length, 'length recipes')
+    
+    
     return (recipeDeets.length == recipe.ingredients.length) 
   }
 
   cookRecipe(recipe) {
-      if(this.checkAbility2Cook(recipe)) {
-        recipe.ingredients.map( ingredient => {
-          let index = this.pantry.findIndex( ing => ing.ingredient === ingredient.id) 
-          this.pantry[index].amount -= ingredient.quantity.amount
-        })
-      }
+    if(this.checkAbility2Cook(recipe)) {
+      recipe.ingredients.map( ingredient => {
+        let index = this.pantry.findIndex( ing => ing.ingredient === ingredient.id) 
+        this.pantry[index].amount -= ingredient.quantity.amount
+      })
     }
+  }
 
   findRequiredIngredients(recipe) {
     if (!this.checkAbility2Cook(recipe)) {
