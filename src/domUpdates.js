@@ -172,12 +172,10 @@ const domUpdates = {
     
     if (!matchedRecipe.isFavorite) {
       allRecipes.addRecipe(matchedRecipe, 'userFavorites');
-      // console.log("add:", allRecipes.userFavorites)
       event.target.src = "../images/apple-logo.png";
     } else {
       event.target.src = "../images/apple-logo-outline.png";
       allRecipes.removeRecipe(matchedRecipe, 'userFavorites');
-      console.log("remove:", allRecipes.userFavorites)
     }
   },
 
@@ -197,10 +195,12 @@ const domUpdates = {
   },
 
   displayPantryInfo(pantry) {
+    let pantryList = document.querySelector(".pantry-list");
+    pantryList.innerHTML = '';
     pantry.forEach(ingredient => {
       let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
         <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
-      document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
+      pantryList.insertAdjacentHTML("beforeend",
         ingredientHtml);
     });
   },

@@ -41,7 +41,6 @@ postForm.addEventListener("click", function() {
   let submitBtn = document.querySelector(".submit-btn")
   submitBtn.addEventListener("click", function() {
     postIngredient(user)
-    redisplayPantryInfo(user);
   })
 });
 
@@ -89,7 +88,7 @@ function generateUser(users, ingredients) {
   // user = new User(users[Math.floor(Math.random() * users.length)]);
   user = new User(users[1])
   allIngredients = ingredients;
-  findPantryInfo(ingredients);
+  findPantryInfo(user);
   domUpdates.createUserDisplay(user);
 }
 
@@ -122,9 +121,9 @@ function findTags(recipeData) {
 }
 
 // CREATE AND USE PANTRY
-function findPantryInfo(ingredientData) {
+function findPantryInfo(user) {
   user.pantry.forEach(ingredient => {
-    let ingredientInfo = ingredientData.find(ing => {
+    let ingredientInfo = allIngredients.find(ing => {
       return ing.id === ingredient.ingredient;
     });
     let originalIngredient = pantryInfo.find(ing => {
@@ -133,7 +132,7 @@ function findPantryInfo(ingredientData) {
       }
     });
     if (ingredientInfo && originalIngredient) {
-      originalIngredient.count += ingredient.amount;
+      originalIngredient.count = ingredient.amount;
     } else if (ingredientInfo) {
       pantryInfo.push({name: ingredientInfo.name, count: ingredient.amount});
     }
@@ -181,38 +180,22 @@ function searchMeals(event) {
 
 function postIngredient(user) {
   let ingName = document.getElementById('ingredient').value 
-  let finder = allIngredients.find(ing => ing.name === ingName)
+  let ingredient = allIngredients.find(ing => ing.name === ingName)
   let ingQuantity = Number(document.getElementById('ingredient-quantity').value)
+  let findUser = (userData) => userData.find(oldU => oldU.id === user.id)
   
   if (finder && typeof ingQuantity === 'number') {
     let ingredientObj = {
       "userID": user.id,
-      "ingredientID": finder.id,
+      "ingredientID": ingredient.id,
       "ingredientModification": ingQuantity,
     }
-    // console.log(ingredientObj)
-    api.postIngredientsData(ingredientObj)
-    // domUpdates.displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
-  }
-}
 
-function redisplayPantryInfo(user) {
-  console.log(user.pantry, "before promise")
-  let findUser = (userData) => userData.find(oldU => oldU.id === user.id)
-  // let newPantry;
-  let newUserData = api.getUsersData()
-    .then(data => data = {
-      userData: data.wcUsersData
-    })
-    .then(data => data = {
-      user: findUser(data.userData)
-    })
-    .then(data => data = {
-      pantry: data.user.pantry
-    })
-  console.log(newUserData, 'promise')
- 
-  
+    api.postIngredientsData(ingredientObj)
+      .then(() => api.getUsersData())
+      .then(response => findUser(response.wcUsersData))
+      .then(response => findPantryInfo(response))
+  }
 }
 
 fetchData()
