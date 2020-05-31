@@ -15,16 +15,16 @@ const domUpdates = {
     let shortRecipeName = this.createShortRecipeName(recipeInfo);
     let cardHtml = `
     <div class="recipe-card" id=${recipeInfo.id}>
-      <h3 maxlength="40">${shortRecipeName}</h3>
-      <div class="card-photo-container">
-        <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
-        <div class="text">
-          <div>Click for Instructions</div>
-        </div>
-      </div>
-      <h4>${recipeInfo.tags[0]}</h4>
-      <img src=${this.checkFavoriteStatus(recipeInfo)} alt="unfilled apple icon" class="card-apple-icon">
-      <img src=${this.choosePotDisplay(boolean)} alt="pot for ingredients" class="ingredient-pot-icon">
+    <h3 maxlength="40">${shortRecipeName}</h3>
+    <div class="card-photo-container">
+    <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
+    <div class="text">
+    <div>Click for Instructions</div>
+    </div>
+    </div>
+    <h4>${recipeInfo.tags[0]}</h4>
+    <img src=${this.checkFavoriteStatus(recipeInfo)} alt="unfilled apple icon" class="card-apple-icon">
+    <img src=${this.choosePotDisplay(boolean)} alt="pot for ingredients" class="ingredient-pot-icon">
     </div>`
     element.insertAdjacentHTML("beforeend", cardHtml);
   },
@@ -39,7 +39,6 @@ const domUpdates = {
   },
 
   choosePotDisplay(boolean) {   
-    
     return (boolean) ? "./images/cooking-icon-300x300.png" : "./images/cooking-icon-outline.png";
   },
 

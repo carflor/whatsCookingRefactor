@@ -102,7 +102,8 @@ function createCards(recipeData) {
 function instantiateCards(allRecipes) {
   allRecipes.forEach(singleRecipe => {
     let recipe = new Recipe(singleRecipe) 
-    domUpdates.addToDom(recipe, main, user.checkAbility2Cook(recipe))
+    let counter = recipe.ingredients.length
+    domUpdates.addToDom(recipe, main, user.checkAbility2Cook(recipe, counter))
   });
 }
 
@@ -184,7 +185,7 @@ function postIngredient(user) {
   let ingQuantity = Number(document.getElementById('ingredient-quantity').value)
   let findUser = (userData) => userData.find(oldU => oldU.id === user.id)
   
-  if (finder && typeof ingQuantity === 'number') {
+  if (ingredient && typeof ingQuantity === 'number') {
     let ingredientObj = {
       "userID": user.id,
       "ingredientID": ingredient.id,
@@ -195,7 +196,11 @@ function postIngredient(user) {
       .then(() => api.getUsersData())
       .then(response => findUser(response.wcUsersData))
       .then(response => findPantryInfo(response))
+      .catch(error => console.log(error))
+
+    document.forms[0].reset();
   }
 }
+
 
 fetchData()
