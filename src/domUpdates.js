@@ -14,18 +14,18 @@ const domUpdates = {
   addToDom(recipeInfo, element, boolean) {
     let shortRecipeName = this.createShortRecipeName(recipeInfo);
     let cardHtml = `
-    <div class="recipe-card" id=${recipeInfo.id}>
+    <section class="recipe-card" id=${recipeInfo.id} tabindex="0">
       <h3 maxlength="40">${shortRecipeName}</h3>
-      <div class="card-photo-container">
+      <section class="card-photo-container">
         <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
-        <div class="text">
-          <div>Click for Instructions</div>
-        </div>
-      </div>
+        <section class="text">
+          <section>Click for Instructions</section>
+        </section>
+      </section>
       <h4>${recipeInfo.tags[0]}</h4>
       <img src=${this.checkFavoriteStatus(recipeInfo)} alt="unfilled apple icon" class="card-apple-icon">
       <img src=${this.choosePotDisplay(boolean)} alt="pot for ingredients" class="ingredient-pot-icon">
-    </div>`
+    </section>`
     element.insertAdjacentHTML("beforeend", cardHtml);
   },
   

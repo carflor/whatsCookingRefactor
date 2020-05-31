@@ -15,7 +15,7 @@ h4 {
   width: max-content;
 }
 
-.recipe-card {
+.recipe-card{
   background-color: $white;
   border: 2px solid $orange;
   border-radius: 7px;
@@ -53,34 +53,34 @@ h4 {
   width: 45px;
 }
 
-.card-photo-preview {
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 7px;
-  cursor: pointer;
-  height: 130px;
-  width: 100%;
-}
-
 .card-photo-container {
   @include flexin(row);
   align-items: center;
   height: 130px;
   justify-content: center;
   position: relative;
-}
 
-.text {
-  background: $orange;
-  color: $white;
-  font-weight: 700;
-  font-size: 0px;
-  opacity: 0%;
-  padding: 0%;
-  position: absolute;
-  text-align: center;
-  width: 0%;
+  .card-photo-preview {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 7px;
+    cursor: pointer;
+    height: 130px;
+    width: 100%;
+  }
+
+  .text {
+    background: $orange;
+    color: $white;
+    font-weight: 700;
+    font-size: 0px;
+    opacity: 0%;
+    padding: 0%;
+    position: absolute;
+    text-align: center;
+    width: 0%;
+  }
 }
 
 /* RECIPE CARD INSTRUCTIONS */
@@ -126,7 +126,7 @@ h4 {
   position: fixed;
   transition: .3s ease;
 
-  &:hover{
+  &:hover {
     background: $orange;
     transition: .3s ease;
   }
