@@ -1,8 +1,22 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: pink;
+@import 'variables';
+@import 'nav';
+@import 'pantry';
+@import 'main';
+@import 'cards';
 
 body {
-  background-color: $primary-background;
+  background-color: $background;
+  display: grid;
+  font-family: "Quicksand", sans-serif;
+  grid-template-columns: 1fr 5fr;
+  grid-template-areas:
+    "header header"
+    "image image"
+    "aside main";
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: auto;
 }
 
 .hidden {

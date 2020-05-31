@@ -1,0 +1,43 @@
+/* PANTRY LIST */
+.drop-menu {
+  align-items: center;
+  background-color: $alt-background;
+  display: block;
+  height: 600px;
+  margin-left: 81%;
+  margin-top: 92px;
+  overflow: scroll;
+  padding: 12px;
+  position: absolute;
+  text-align: center;
+  width: 250px;
+  z-index: 3;
+}
+
+.drop-menu h2 {
+  color: $dark-green;
+  margin: 0px;
+}
+
+.pantry-list {
+  color: $black;
+  padding-left: 15px;
+  text-align: left;
+}
+
+.ing-form {
+  @include flexin(column);
+  justify-content: center;
+  align-items: center;
+  .container {
+    margin: .5vh;
+  }
+}
+
+.submit-btn, 
+.back-button {
+  @extend .filter-btn;
+  &:hover &:focus {
+    background-color: $hover;
+  }
+}
