@@ -52,8 +52,11 @@ class RecipeRepo {
     })
     this.recipes.forEach(meal => { 
       meal = new Recipe(meal);
-      let mealIngredients = meal.findIngredientNames(ingredientKey).map(meal => meal.name).join(' ').toLowerCase()
-      console.log(mealIngredients)
+      console.log(meal.tags);
+      let mealIngredients = meal
+        .findIngredientNames(ingredientKey)
+        .map(meal => meal.name)
+        .join(' ').toLowerCase();
       if (mealIngredients.includes(str) && !filteredMeals.includes(meal)) {
         filteredMeals.push(meal)
       }

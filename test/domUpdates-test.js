@@ -1,9 +1,9 @@
 const chai = require('chai');
 import { expect } from 'chai';
 import domUpdates from '../src/domUpdates';
-import ApiFetch from '../src/ApiFetch'
+// import ApiFetch from '../src/ApiFetch'
 import users from '../src/data/users-data'
-import ingredients from '../src/data/ingredient-data'
+// import ingredients from '../src/data/ingredient-data'
 
 // import { generateUser } from '../src/scripts'
 

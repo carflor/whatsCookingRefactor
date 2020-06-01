@@ -84,7 +84,6 @@ const domUpdates = {
     let selectedTags = checkboxInfo.filter(box => {
       return box.checked;
     })
-    console.log(selectedTags);
     this.findTaggedRecipes(selectedTags, recipes, element);
   },
 
