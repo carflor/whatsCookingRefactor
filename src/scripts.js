@@ -21,6 +21,7 @@ let user;
 let pantryInfo = [];
 let recipeRepo;
 let recipes;
+let allIngredients;
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
@@ -35,7 +36,6 @@ let searchBar = document.querySelector(".search-bar")
 
 //POST EVENT LISTENER AND QUERY SELECTOR
 let postForm = document.querySelector(".add-ingredients-btn")
-<<<<<<< HEAD
 postForm.addEventListener("click", function() {
   domUpdates.displayIngredientForm()
   let submitBtn = document.querySelector(".submit-btn")
@@ -44,9 +44,6 @@ postForm.addEventListener("click", function() {
   })
 });
 
-=======
-postForm.addEventListener("click", domUpdates.displayIngredientForm)
->>>>>>> 86432fbfe7277ddce776bdc7e7e0e1339a27b631
 
 // ON CLICK EVENTS
 allRecipesBtn.addEventListener("click", function() {
@@ -56,7 +53,6 @@ filterBtn.addEventListener("click", function() {
   domUpdates.findCheckedBoxes(recipes)
 });
 main.addEventListener("click", function() {
-  console.log(allIngredients)
   domUpdates.manageCardStatus(event, fullRecipeInfo, recipeRepo, allIngredients)
 });
 pantryBtn.addEventListener("click", function() {
@@ -104,7 +100,6 @@ function createCards(recipeData) {
 }
 
 function instantiateCards(allRecipes) {
-  console.log('card display:', user instanceof User)
   allRecipes.forEach(singleRecipe => {
     let recipe = new Recipe(singleRecipe, allIngredients) 
     let counter = recipe.ingredients.length

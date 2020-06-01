@@ -11,7 +11,6 @@ $alt-background: #DAE4EE;
 @mixin flexin($direction, $justifyDirection) {
   display: flex;
   flex-direction: $direction;
-<<<<<<< HEAD
   justify-content: $justifyDirection;
 }
 
@@ -26,8 +25,3 @@ $alt-background: #DAE4EE;
     width: 100%;
     }
 }
-=======
-}
-
-
->>>>>>> 86432fbfe7277ddce776bdc7e7e0e1339a27b631
