@@ -173,7 +173,7 @@ function findRecipesWithCheckedIngredients(selected) {
 function searchMeals(event) {
   const searchValue = event.target.value.toLowerCase();
   main.innerHTML = " ";
-  let searchResults = recipeRepo.searchRecipes(searchValue)
+  let searchResults = recipeRepo.searchRecipes(searchValue, allIngredients)
   searchResults.forEach(recipe => {
     domUpdates.addToDom(recipe, main)
   })
