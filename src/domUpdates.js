@@ -78,16 +78,17 @@ const domUpdates = {
     document.querySelector(".my-recipes-banner").style.display = "block";
   },
 
-  findCheckedBoxes(recipes) {
+  findCheckedBoxes(recipes, element) {
     let tagCheckboxes = document.querySelectorAll(".checked-tag");
     let checkboxInfo = Array.from(tagCheckboxes)
     let selectedTags = checkboxInfo.filter(box => {
       return box.checked;
     })
-    this.findTaggedRecipes(selectedTags, recipes);
+    console.log(selectedTags);
+    this.findTaggedRecipes(selectedTags, recipes, element);
   },
 
-  findTaggedRecipes(selected, recipes) {
+  findTaggedRecipes(selected, recipes, element) {
     let filteredResults = [];
     selected.forEach(tag => {
       let allRecipes = recipes.filter(recipe => {
@@ -99,7 +100,7 @@ const domUpdates = {
         }
       })
     });
-    this.showAllRecipes(recipes);
+    this.showAllRecipes(recipes, element);
     if (filteredResults.length > 0) {
       this.filterRecipes(recipes, filteredResults);
     }
