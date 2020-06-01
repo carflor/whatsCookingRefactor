@@ -8,9 +8,26 @@ $hover: rgb(254, 97, 0);
 $alt-background: #DAE4EE;
 
 
-@mixin flexin($direction) {
+@mixin flexin($direction, $justifyDirection) {
   display: flex;
   flex-direction: $direction;
+<<<<<<< HEAD
+  justify-content: $justifyDirection;
+}
+
+@mixin bannerStyle() {
+  @include flexin(column, center);
+  text-align: center;
+  align-content: center;
+  width: 95%;
+  
+  :h1 {
+    color: white;
+    width: 100%;
+    }
+}
+=======
 }
 
 
+>>>>>>> 86432fbfe7277ddce776bdc7e7e0e1339a27b631

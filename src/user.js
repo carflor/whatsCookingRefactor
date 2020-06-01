@@ -5,18 +5,15 @@ class User {
     this.pantry = user.pantry
   }
 
-  checkAbility2Cook(recipe) {
-    let recipeDeets = [];
-    recipe.ingredients.forEach(ingredient => {
-      this.pantry.forEach(item => {
-        if (item.ingredient === ingredient.id && item.amount >= ingredient.quantity.amount) {
-          recipeDeets.push(ingredient)
-        }
-      })
-    })
-    
-    
-    return (recipeDeets.length == recipe.ingredients.length) 
+  checkAbility2Cook(recipe, counter) {
+    if (counter === 0) return true
+    let ingredient = this.pantry.find(item => item.ingredient === recipe.ingredients[counter - 1].id)
+    if (!ingredient) return false
+    if (ingredient) {
+      (ingredient.amount >= recipe.ingredients[counter - 1].quantity.amount) ?
+        this.checkAbility2Cook(recipe, (counter - 1 )) : false
+    }
+    return true   
   }
 
   cookRecipe(recipe) {

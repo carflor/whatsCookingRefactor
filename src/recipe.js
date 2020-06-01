@@ -19,6 +19,14 @@ class Recipe {
       return ingredientsId.includes(ingData.id);
     });
   }
+
+  findIngredientNames(ingredientKey) {
+    return this.ingredients.map(ingredient => {
+      let name = ingredientKey.find(ing => ingredient.id === ing.id).name;
+      ingredient.name = name
+      return ingredient 
+    })
+  }
 }
 
 export default Recipe;

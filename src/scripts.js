@@ -35,7 +35,18 @@ let searchBar = document.querySelector(".search-bar")
 
 //POST EVENT LISTENER AND QUERY SELECTOR
 let postForm = document.querySelector(".add-ingredients-btn")
+<<<<<<< HEAD
+postForm.addEventListener("click", function() {
+  domUpdates.displayIngredientForm()
+  let submitBtn = document.querySelector(".submit-btn")
+  submitBtn.addEventListener("click", function() {
+    postIngredient(user)
+  })
+});
+
+=======
 postForm.addEventListener("click", domUpdates.displayIngredientForm)
+>>>>>>> 86432fbfe7277ddce776bdc7e7e0e1339a27b631
 
 // ON CLICK EVENTS
 allRecipesBtn.addEventListener("click", function() {
@@ -45,7 +56,8 @@ filterBtn.addEventListener("click", function() {
   domUpdates.findCheckedBoxes(recipes)
 });
 main.addEventListener("click", function() {
-  domUpdates.manageCardStatus(event, fullRecipeInfo, recipeRepo)
+  console.log(allIngredients)
+  domUpdates.manageCardStatus(event, fullRecipeInfo, recipeRepo, allIngredients)
 });
 pantryBtn.addEventListener("click", function() {
   domUpdates.toggleMenu(menuDropdown)
@@ -77,8 +89,10 @@ const fetchData = () => {
 
 // GENERATE A USER ON LOAD
 function generateUser(users, ingredients) {
-  user = new User(users[Math.floor(Math.random() * users.length)]);
-  findPantryInfo(ingredients);
+  // user = new User(users[Math.floor(Math.random() * users.length)]);
+  user = new User(users[1])
+  allIngredients = ingredients;
+  findPantryInfo(user);
   domUpdates.createUserDisplay(user);
 }
 
@@ -92,9 +106,9 @@ function createCards(recipeData) {
 function instantiateCards(allRecipes) {
   console.log('card display:', user instanceof User)
   allRecipes.forEach(singleRecipe => {
-    let recipe = new Recipe(singleRecipe) 
-    console.log(user.checkAbility2Cook(recipe))
-    domUpdates.addToDom(recipe, main, user.checkAbility2Cook(recipe))
+    let recipe = new Recipe(singleRecipe, allIngredients) 
+    let counter = recipe.ingredients.length
+    domUpdates.addToDom(recipe, main, user.checkAbility2Cook(recipe, counter))
   });
 }
 
@@ -113,9 +127,9 @@ function findTags(recipeData) {
 }
 
 // CREATE AND USE PANTRY
-function findPantryInfo(ingredientData) {
+function findPantryInfo(user) {
   user.pantry.forEach(ingredient => {
-    let ingredientInfo = ingredientData.find(ing => {
+    let ingredientInfo = allIngredients.find(ing => {
       return ing.id === ingredient.ingredient;
     });
     let originalIngredient = pantryInfo.find(ing => {
@@ -124,7 +138,7 @@ function findPantryInfo(ingredientData) {
       }
     });
     if (ingredientInfo && originalIngredient) {
-      originalIngredient.count += ingredient.amount;
+      originalIngredient.count = ingredient.amount;
     } else if (ingredientInfo) {
       pantryInfo.push({name: ingredientInfo.name, count: ingredient.amount});
     }
@@ -169,5 +183,29 @@ function searchMeals(event) {
     domUpdates.addToDom(recipe, main)
   })
 }
+
+function postIngredient(user) {
+  let ingName = document.getElementById('ingredient').value 
+  let ingredient = allIngredients.find(ing => ing.name === ingName)
+  let ingQuantity = Number(document.getElementById('ingredient-quantity').value)
+  let findUser = (userData) => userData.find(oldU => oldU.id === user.id)
+  
+  if (ingredient && typeof ingQuantity === 'number') {
+    let ingredientObj = {
+      "userID": user.id,
+      "ingredientID": ingredient.id,
+      "ingredientModification": ingQuantity,
+    }
+
+    api.postIngredientsData(ingredientObj)
+      .then(() => api.getUsersData())
+      .then(response => findUser(response.wcUsersData))
+      .then(response => findPantryInfo(response))
+      .catch(error => console.log(error))
+
+    document.forms[0].reset();
+  }
+}
+
 
 fetchData()
