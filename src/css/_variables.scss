@@ -7,7 +7,20 @@ $hover: #84C8A4;
 $alt-background: #DAE4EE;
 
 
-@mixin flexin($direction) {
+@mixin flexin($direction, $justifyDirection) {
   display: flex;
   flex-direction: $direction;
+  justify-content: $justifyDirection;
+}
+
+@mixin bannerStyle() {
+  @include flexin(column, center);
+  text-align: center;
+  align-content: center;
+  width: 95%;
+  
+  :h1 {
+    color: white;
+    width: 100%;
+    }
 }

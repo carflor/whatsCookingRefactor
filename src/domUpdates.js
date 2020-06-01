@@ -1,4 +1,4 @@
-import user from './scripts'
+import Recipe from './recipe.js'
 
 const domUpdates = {
   createUserDisplay(user) {
@@ -119,17 +119,18 @@ const domUpdates = {
     });
   },
 
-  generateIngredients(recipe) {
-    return recipe.ingredients.map(i => {
-      return `${this.capitalize(recipe.name)} (${i.quantity.amount} ${i.quantity.unit})`
-    }).join(", ");
+  generateIngredients(recipe, ingredientKey) {
+    recipe = new Recipe(recipe);
+    return recipe.findIngredientNames(ingredientKey).map(ing => 
+      `${this.capitalize(ing.name)} (${ing.quantity.amount} ${ing.quantity.unit})`
+    ).join(', ')
   },
 
-  openRecipeInfo(event, element, recipeRepo) {
+  openRecipeInfo(event, element, recipeRepo, ingredientKey) {
     let recipeId = parseInt(event.target.closest(".recipe-card").id);
     element.style.display = "inline";
     let recipe = recipeRepo.recipes.find(recipe => recipe.id == recipeId)
-    this.generateRecipeTitle(recipe, this.generateIngredients(recipe), element);
+    this.generateRecipeTitle(recipe, this.generateIngredients(recipe, ingredientKey), element);
     this.generateInstructions(recipe, element);
     element.insertAdjacentHTML("beforebegin", "<section class='overlay'></section>");
   },
@@ -155,13 +156,13 @@ const domUpdates = {
     element.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
   },
 
-  manageCardStatus(event, element, recipeRepo) {
+  manageCardStatus(event, element, recipeRepo, ingredientKey) {
     if (event.target.className === "card-apple-icon") {
       this.toggleAppleIcon(event, recipeRepo)
     } else if (event.target.id === "exit-recipe-btn") {
       this.exitRecipe(element); 
     } else {
-      this.openRecipeInfo(event, element, recipeRepo);  
+      this.openRecipeInfo(event, element, recipeRepo, ingredientKey);  
     }
   },
 

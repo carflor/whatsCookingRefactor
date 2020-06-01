@@ -9,7 +9,7 @@ h1 {
 }
 
 header {
-  @include flexin(row)
+  @include flexin(row, center);
   grid-area: header;
   padding: 0% 0%;
   width: 100%;

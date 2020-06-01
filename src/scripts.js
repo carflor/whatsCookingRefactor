@@ -53,7 +53,8 @@ filterBtn.addEventListener("click", function() {
   domUpdates.findCheckedBoxes(recipes)
 });
 main.addEventListener("click", function() {
-  domUpdates.manageCardStatus(event, fullRecipeInfo, recipeRepo)
+  console.log(allIngredients)
+  domUpdates.manageCardStatus(event, fullRecipeInfo, recipeRepo, allIngredients)
 });
 pantryBtn.addEventListener("click", function() {
   domUpdates.toggleMenu(menuDropdown)
@@ -101,7 +102,7 @@ function createCards(recipeData) {
 
 function instantiateCards(allRecipes) {
   allRecipes.forEach(singleRecipe => {
-    let recipe = new Recipe(singleRecipe) 
+    let recipe = new Recipe(singleRecipe, allIngredients) 
     let counter = recipe.ingredients.length
     domUpdates.addToDom(recipe, main, user.checkAbility2Cook(recipe, counter))
   });
