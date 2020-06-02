@@ -9,8 +9,12 @@ class RecipeRepo {
   addRecipe(recipe, recipeGroup) {
     if (recipeGroup === 'userFavorites') {
       recipe.isFavorite = true;
-    }  
-    this[recipeGroup].push(recipe);
+      this[recipeGroup].push(recipe);
+    } else if (recipeGroup === 'recipes2Cook') {
+      this[recipeGroup].push(recipe);
+    } else {
+      return []
+    }      
   }
 
   removeRecipe(recipe, recipeGroup) {
@@ -23,8 +27,8 @@ class RecipeRepo {
     if (recipeGroup === 'recipes2Cook') {
       recipe.isCooked = true;
     }
-    const index = recipeGroup.indexOf(recipe)
-    return this[recipeGroup].splice(index, 1)
+    const index = this[recipeGroup].indexOf(recipe)
+    this[recipeGroup].splice(index, 1)
   }
 
   filterByType(tagNames) {
@@ -52,7 +56,6 @@ class RecipeRepo {
     })
     this.recipes.forEach(meal => { 
       meal = new Recipe(meal);
-      console.log(meal.tags);
       let mealIngredients = meal
         .findIngredientNames(ingredientKey)
         .map(meal => meal.name)
