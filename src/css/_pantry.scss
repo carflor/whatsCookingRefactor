@@ -15,7 +15,7 @@
 }
 
 .drop-menu h2 {
-  color: $dark-green;
+  color: $orange;
   margin: 0px;
 }
 
@@ -37,6 +37,6 @@
 .back-button {
   @extend .filter-btn;
   &:hover &:focus {
-    background-color: $hover;
+    background-color: $orange;
   }
 }
