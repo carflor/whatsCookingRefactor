@@ -12,7 +12,7 @@ main {
 
 /* BANNER IMAGE*/
 .banner-image {
-  background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),url("../images/green-apples.jpg");
+  background: linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)),url("../images/green-apples.jpg");
   grid-area: image;
   height: 150px;
   overflow: hidden;
@@ -38,16 +38,24 @@ main {
 
 /* FILTER SIDEBAR */
 aside {
-  background-color: white;
+  background-color: $white;
   @include flexin(row, center);
   height: auto;
   text-align: center;
   
-  &.wrap {
+  .wrap {
     height: 100vh;
     padding: 10px;
     position: relative;
     width: 200px;
+
+    h2 {
+      color: $green;
+    }
+
+    .filter-btn {
+      background-color: $green;
+    }
   }
 }
   
@@ -57,7 +65,7 @@ ul {
   padding-left: 35px;
 
 
-  :li {
+  li {
   margin: 2px;
   }
 }

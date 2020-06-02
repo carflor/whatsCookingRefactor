@@ -1,7 +1,7 @@
-$background: complement(rgba(254, 97, 0, .3));
+$background: complement(rgba(162, 203, 74, .6));
 $white: #fff;
-$green: rgb(254, 97, 0);
-$orange: rgb(254, 97, 0);
+$green: invert(rgb(162, 203, 74));
+$orange: invert(rgb(162, 203, 74));
 $dark-green: rgb(254, 97, 0);
 $black: #000;
 $hover: rgb(254, 97, 0);
@@ -20,7 +20,7 @@ $alt-background: #DAE4EE;
   align-content: center;
   width: 95%;
   
-  :h1 {
+  h1 {
     color: white;
     width: 100%;
     }

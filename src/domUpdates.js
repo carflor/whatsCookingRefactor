@@ -4,9 +4,9 @@ const domUpdates = {
   createUserDisplay(user) {
     let firstName = user.name.split(" ")[0];
     let welcomeMsg = `
-      <div class="welcome-msg">
+      <section class="welcome-msg">
         <h1>Welcome ${firstName}!</h1>
-      </div>`;
+      </section>`;
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
       welcomeMsg);
   },
