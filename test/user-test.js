@@ -5,7 +5,7 @@ import users from '../src/data/users-data';
 import recipeData from '../src/data/recipe-data'
 // import RecipeRepo from '../src/recipeRepo'
 
-describe.only('User', function() {
+describe('User', function() {
   let user, userInfo, recipe;
 
   beforeEach(function() {

@@ -55,7 +55,6 @@ savedRecipesBtn.addEventListener("click", function() {
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchBar.addEventListener('keyup', searchMeals);
 postForm.addEventListener("click", function() {
-  // domUpdates.displayIngredientForm()
   if (pantryForm.classList.contains('hidden')) {
     pantryForm.classList.remove('hidden')
   } else {
@@ -88,8 +87,7 @@ const fetchData = () => {
 
 // GENERATE A USER ON LOAD
 function generateUser(users, ingredients) {
-  // user = new User(users[Math.floor(Math.random() * users.length)]);
-  user = new User(users[1])
+  user = new User(users[Math.floor(Math.random() * users.length)]);
   allIngredients = ingredients;
   findPantryInfo(user);
   domUpdates.createUserDisplay(user);
