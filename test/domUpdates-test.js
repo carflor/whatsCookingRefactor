@@ -1,18 +1,15 @@
 const chai = require('chai');
 import { expect } from 'chai';
 import domUpdates from '../src/domUpdates';
-// import ApiFetch from '../src/ApiFetch'
 import users from '../src/data/users-data'
+// import ApiFetch from '../src/ApiFetch'
 // import ingredients from '../src/data/ingredient-data'
-
 // import { generateUser } from '../src/scripts'
-
 // // import User from '../src/user'
 // import script from '../src/scripts'
 
 const spies = require('chai-spies'); 
 chai.use(spies)
-
 
 // describe.skip('API fetch', function() {
   
