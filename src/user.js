@@ -30,7 +30,6 @@ class User {
   cookRecipe(recipe) {
     if(this.checkAbility2Cook(recipe)) {
       recipe.ingredients.map(ingredient => {
-        // console.log(ingredient, 'ingredient')
         let index = this.pantry.findIndex( ing => ing.ingredient === ingredient.id) 
         this.pantry[index].amount -= ingredient.quantity.amount
       })
