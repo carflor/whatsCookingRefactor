@@ -30,6 +30,22 @@
       <h2>My Pantry</h2>
       <button class="show-pantry-recipes-btn">What Can I Make?</button>
       <button class="add-ingredients-btn">Add Ingredient To Pantry</button>
+      <section class="pantry-form hidden">
+        <form class="ing-form "method="post">
+          <h4>Add Ingredients Here</h4>
+          <section class="container">
+          <label for="ingredient">Ingredient</label>
+          <input id="ingredient" type="ingredient" name="ingredient" value=""></input>
+          </section>
+          <section class="container">
+          <label for="quantity">Quantity</label>
+          <input id="ingredient-quantity" type="number" name="ingredient-quantity" min="0" max="100"></input>
+          </section>
+          <section class="container">
+          <button class="submit-btn" type="button" name="submit">Submit</button>
+          </section>
+        </form>
+      </section>
       <ul class="pantry-list"></ul>
     </section>
     <aside>

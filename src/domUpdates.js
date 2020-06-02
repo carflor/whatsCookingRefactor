@@ -211,29 +211,7 @@ const domUpdates = {
       this.addToDom(recipe, element) 
     })
     this.showMyRecipesBanner();
-  },
-
-  displayIngredientForm() {
-    const pantryForm = 
-    `<section class="pantry-form">
-      <form class="ing-form "method="post">
-        <h4>Add Ingredients Here</h4>
-        <section class="container">
-        <label for="ingredient">Ingredient</label>
-        <input id="ingredient" type="ingredient" name="ingredient" value=""></input>
-        </section>
-        <section class="container">
-        <label for="quantity">Quantity</label>
-        <input id="ingredient-quantity" type="number" name="ingredient-quantity" min="0" max="100"></input>
-        </section>
-        <section class="container">
-        <button class="submit-btn" type="button" name="submit">Submit</button>
-        <button class="back-button" type="button" name="button">Back</button>
-        </section>
-      </form>
-    </section>`
-    document.querySelector('.add-ingredients-btn').insertAdjacentHTML('afterend', pantryForm)
-  },
+  }
 };
 
 export default domUpdates;

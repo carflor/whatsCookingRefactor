@@ -33,17 +33,8 @@ let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let menuDropdown = document.querySelector(".drop-menu");
 let searchBar = document.querySelector(".search-bar")
-
-//POST EVENT LISTENER AND QUERY SELECTOR
 let postForm = document.querySelector(".add-ingredients-btn")
-postForm.addEventListener("click", function() {
-  domUpdates.displayIngredientForm()
-  let submitBtn = document.querySelector(".submit-btn")
-  submitBtn.addEventListener("click", function() {
-    postIngredient(user)
-  })
-});
-
+let pantryForm = document.querySelector(".pantry-form")
 
 // ON CLICK EVENTS
 allRecipesBtn.addEventListener("click", function() {
@@ -63,6 +54,18 @@ savedRecipesBtn.addEventListener("click", function() {
 });
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchBar.addEventListener('keyup', searchMeals);
+postForm.addEventListener("click", function() {
+  // domUpdates.displayIngredientForm()
+  if (pantryForm.classList.contains('hidden')) {
+    pantryForm.classList.remove('hidden')
+  } else {
+    pantryForm.classList.add('hidden')
+  }
+  let submitBtn = document.querySelector(".submit-btn")
+  submitBtn.addEventListener("click", function() {
+    postIngredient(user)
+  })
+});
 
 // DATA FETCH
 const fetchData = () => {
