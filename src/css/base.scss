@@ -15,11 +15,12 @@ body {
     "image image"
     "aside main";
   height: 100vh;
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
   -webkit-font-smoothing: auto;
-  // @include tablet;
-  @media(max-width: #{$tablet-width}) {
+
+  @media(max-width: #{$phone-width}) {
+    grid-template-columns: 1fr;
     grid-template-areas:
     "header"
     "image"
@@ -28,8 +29,47 @@ body {
 }
 
 aside {
-  @media(max-width: #{$tablet-width}) {
+  @media(max-width: #{$phone-width}) {
     display: none;
+  }
+}
+
+header {
+  @media(max-width: #{$phone-width}) {
+    @include flexin(column, center);
+
+    h1, section {
+      @include flexin(row, center);
+      width: 95%;
+      
+      .search-container {
+        display: flex;
+        flex-direction: row;
+        margin: 1% 0%;
+        &:hover {
+          input {
+            width: 100px;
+          }
+        }
+        &:focus {
+          input {
+            width: 100px;
+          }
+        }
+      }
+
+    }
+
+    .banner-image {
+      width: 100%;
+      grid-area: image;
+    }
+
+    .header-apple-icon {
+      height: 35px;
+      margin-left: 5px;
+      width: 30px;
+    }
   }
 }
 
