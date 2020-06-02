@@ -106,7 +106,7 @@ function instantiateCards(allRecipes) {
   allRecipes.forEach(singleRecipe => {
     let recipe = new Recipe(singleRecipe, allIngredients) 
     let counter = recipe.ingredients.length
-    domUpdates.addToDom(recipe, main, user.checkAbility2Cook(recipe, counter))
+    domUpdates.addToDom(recipe, main, false)
   });
 }
 

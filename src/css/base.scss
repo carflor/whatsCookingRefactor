@@ -3,6 +3,7 @@
 @import 'pantry';
 @import 'main';
 @import 'cards';
+@import 'media-queries';
 
 body {
   background-color: $background;
@@ -17,6 +18,19 @@ body {
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: auto;
+  // @include tablet;
+  @media(max-width: #{$tablet-width}) {
+    grid-template-areas:
+    "header"
+    "image"
+    "main";
+  }
+}
+
+aside {
+  @media(max-width: #{$tablet-width}) {
+    display: none;
+  }
 }
 
 .hidden {
