@@ -5,15 +5,12 @@ class User {
     this.pantry = user.pantry
   }
 
-  checkAbility2Cook(recipe, counter) {
-    if (counter === 0) return true
-    let ingredient = this.pantry.find(item => item.ingredient === recipe.ingredients[counter - 1].id)
-    if (!ingredient) return false
-    if (ingredient) {
-      (ingredient.amount >= recipe.ingredients[counter - 1].quantity.amount) ?
-        this.checkAbility2Cook(recipe, (counter - 1 )) : false
-    }
-    return true   
+  checkAbility2Cook(recipe, i = 0) {
+    let ingredient = this.pantry.find(item => item.ingredient === recipe.ingredients[i].id);
+    return (!ingredient) ? false 
+    : (i === recipe.ingredients.length) ? true
+      : (ingredient.amount >= recipe.ingredients[i].quantity.amount) ? 
+        this.checkAbility2Cook(recipe, (i + 1)) : false
   }
 
   cookRecipe(recipe) {

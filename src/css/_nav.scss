@@ -13,6 +13,12 @@ header {
   grid-area: header;
   padding: 0% 0%;
   width: 100%;
+
+  section {
+    @include flexin(row, space-evenly);
+    width: 45%;
+    align-content: center;
+  }
 }
 
 span {
@@ -40,7 +46,7 @@ span {
   overflow: hidden;
   text-align: center;
   transition: .4s ease;
-  width: 15%;
+  width: 30%;
   &:hover, &:focus {
     color: $orange;
     background-color: invert($background);

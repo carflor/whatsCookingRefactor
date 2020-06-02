@@ -106,7 +106,7 @@ function instantiateCards(allRecipes) {
   allRecipes.forEach(singleRecipe => {
     let recipe = new Recipe(singleRecipe, allIngredients) 
     let counter = recipe.ingredients.length
-    domUpdates.addToDom(recipe, main, user.checkAbility2Cook(recipe, counter))
+    domUpdates.addToDom(recipe, main, false)
   });
 }
 
@@ -200,7 +200,7 @@ function postIngredient(user) {
       .then(response => findUser(response.wcUsersData))
       .then(response => findPantryInfo(response))
       .catch(error => console.log(error))
-    document.forms[0].reset();
+    document.forms[1].reset();
   }
 }
 

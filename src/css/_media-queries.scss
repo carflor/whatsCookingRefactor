@@ -4,3 +4,16 @@
 // // medium screen size (md)
 // @media (min-width: 992px) {
 //}
+
+
+$tablet-width: 760px;
+$desktop-width: 1260px;
+$phone-width: 440px;
+
+
+  @media(min-width:#{$phone-width}) and (max-width: #{$tablet-width}) {
+    grid-template-areas:
+      "header"
+      "image"
+      "main";
+}

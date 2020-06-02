@@ -7,7 +7,8 @@ const domUpdates = {
       <section class="welcome-msg">
         <h1>Welcome ${firstName}!</h1>
       </section>`;
-    document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
+    document.querySelector(".banner-image")
+    .insertAdjacentHTML("afterbegin",
       welcomeMsg);
   },
 
@@ -65,8 +66,9 @@ const domUpdates = {
   },
 
   showWelcomeBanner() {
-    if (document.querySelector(".welcome-msg")) {
-      document.querySelector(".welcome-msg").style.display = "flex";
+    let welcomeBanner = document.querySelector(".welcome-msg");
+    if (welcomeBanner) {
+      welcomeBanner.style.display = "flex";
       document.querySelector(".my-recipes-banner").style.display = "none";
     } else {
       document.querySelector(".my-recipes-banner").style.display = "none";
@@ -182,8 +184,8 @@ const domUpdates = {
   exitRecipe(element) {
     while (element.firstChild &&
     element.removeChild(element.firstChild));
-    element.style.display = "none";
-    document.querySelector(".overlay").remove();
+      element.style.display = "none";
+      document.querySelector(".overlay").remove();
   },
 
   toggleMenu(menu) {
