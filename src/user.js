@@ -30,18 +30,18 @@ class User {
       let missingIngs = recipe.ingredients.reduce((acc, ingredient) => {
         const index = this.pantry.findIndex( ing => ing.ingredient === ingredient.id)
         let item = this.pantry[index]
-          if (index === -1) {
-            acc.push(ingredient)
-          } else if (item.ingredient === ingredient.id && item.amount < ingredient.quantity.amount){
-            ingredient.quantity.amount -= item.amount;
-            acc.push(ingredient)
-          }
+        if (index === -1) {
+          acc.push(ingredient)
+        } else if (item.ingredient === ingredient.id && item.amount < ingredient.quantity.amount) {
+          ingredient.quantity.amount -= item.amount;
+          acc.push(ingredient)
+        }
         return acc;
       }, [])
       return missingIngs
-      }
     }
   }
+}
 
 export default User;
 
