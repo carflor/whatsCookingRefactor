@@ -200,7 +200,7 @@ function postIngredient(user) {
       .then(response => findUser(response.wcUsersData))
       .then(response => findPantryInfo(response))
       .catch(error => console.log(error))
-    document.forms[0].reset();
+    document.forms[1].reset();
   }
 }
 
