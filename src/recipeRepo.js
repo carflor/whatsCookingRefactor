@@ -1,3 +1,4 @@
+import Recipe from './recipe'
 class RecipeRepo {
   constructor(recipes) {
     this.recipes = recipes || [];
@@ -38,15 +39,25 @@ class RecipeRepo {
     return filtered
   }
 
-  searchRecipes(str) {
+  searchRecipes(str, ingredientKey) {
     if (!str) {
       return this.recipes
     }
     const filteredMeals = [];
     this.recipes.forEach(meal => {
-      let mealName = meal.name.toLowerCase()
-      let mealIngredients = meal.ingredients.map(ingredient => ingredient.name).join(' ').toLowerCase()
-      if ((mealName.includes(str) || mealIngredients.includes(str)) && !filteredMeals.includes(meal)) {
+      let mealName = meal.name.toLowerCase();
+      if ((mealName.includes(str) && !filteredMeals.includes(meal))) {
+        filteredMeals.push(meal)
+      }
+    })
+    this.recipes.forEach(meal => { 
+      meal = new Recipe(meal);
+      console.log(meal.tags);
+      let mealIngredients = meal
+        .findIngredientNames(ingredientKey)
+        .map(meal => meal.name)
+        .join(' ').toLowerCase();
+      if (mealIngredients.includes(str) && !filteredMeals.includes(meal)) {
         filteredMeals.push(meal)
       }
     })

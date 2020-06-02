@@ -31,7 +31,7 @@ let pantryBtn = document.querySelector(".my-pantry-btn");
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
-var menuDropdown = document.querySelector(".drop-menu");
+let menuDropdown = document.querySelector(".drop-menu");
 let searchBar = document.querySelector(".search-bar")
 
 //POST EVENT LISTENER AND QUERY SELECTOR
@@ -50,7 +50,7 @@ allRecipesBtn.addEventListener("click", function() {
   domUpdates.showAllRecipes(recipes, main)
 });
 filterBtn.addEventListener("click", function() {
-  domUpdates.findCheckedBoxes(recipes)
+  domUpdates.findCheckedBoxes(recipes, main)
 });
 main.addEventListener("click", function() {
   domUpdates.manageCardStatus(event, fullRecipeInfo, recipeRepo, allIngredients)
@@ -173,7 +173,7 @@ function findRecipesWithCheckedIngredients(selected) {
 function searchMeals(event) {
   const searchValue = event.target.value.toLowerCase();
   main.innerHTML = " ";
-  let searchResults = recipeRepo.searchRecipes(searchValue)
+  let searchResults = recipeRepo.searchRecipes(searchValue, allIngredients)
   searchResults.forEach(recipe => {
     domUpdates.addToDom(recipe, main)
   })
@@ -204,3 +204,5 @@ function postIngredient(user) {
 
 
 fetchData()
+
+export default { generateUser }
