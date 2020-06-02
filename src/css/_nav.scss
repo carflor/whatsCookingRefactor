@@ -1,6 +1,6 @@
 h1 {
   align-self: center;
-  color: $white;
+  color: $green;
   font-family: "Sulphur Point", sans-serif;
   font-size: 50px;
   margin: 0%;
@@ -28,7 +28,7 @@ span {
 
 .nav-btn {
   align-items: center;
-  background: $background no-repeat;
+  background-color: $background;
   border: none;
   cursor: pointer;
   display: flex;
@@ -42,17 +42,17 @@ span {
   transition: .4s ease;
   width: 15%;
   &:hover, &:focus {
-    color: $green;
+    color: $dark-green;
+    background-color: invert($background);
     font-size: 14px;
     text-shadow: 0px 2px 4px $black;
     transition: .4s ease;
   }
-}
-
-.nav-btn img{
-  max-height: 40px;
-  max-width: 40px;
-  padding: 2px 0px;
+  img {
+    max-height: 40px;
+    max-width: 40px;
+    padding: 2px 0px;
+  }
 }
 
 .search-container {
@@ -99,7 +99,7 @@ span {
 .add-ingredients-btn,
 .show-all-btn,
 .filter-btn {
-  background-color: $dark-green;
+  background-color: $background;
   border: 0;
   border-radius: 3px;
   color: $white;
