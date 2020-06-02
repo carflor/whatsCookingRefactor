@@ -6,7 +6,7 @@ import users from '../src/data/users-data'
 const spies = require('chai-spies'); 
 chai.use(spies)
 
-describe.only('DOM Manipulation', function () {
+describe('DOM Manipulation', function () {
   beforeEach(function() {
     global.document = {};
     chai.spy.on(document, "querySelector", () => {});
