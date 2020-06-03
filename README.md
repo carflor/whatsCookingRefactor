@@ -16,7 +16,13 @@ We built on top of somebody else’s pre-existing Whats Cookin’ codebase and a
 * Leverage Chai Spies to verify that your DOM manipulation is happening
 
 # In Action
-![Main Functionality] (http://g.recordit.co/7D9bLxgekw.gif)
+![Open Recipe Info and Favorite recipe functionality](https://user-images.githubusercontent.com/60306770/83583734-60286880-a502-11ea-9be8-50cda9d67796.gif)
+
+![Mobile display](https://user-images.githubusercontent.com/60306770/83583890-cca36780-a502-11ea-8273-2603d3faa99e.gif)
+
+![Update Pantry Amount](https://user-images.githubusercontent.com/60306770/83583905-d4fba280-a502-11ea-855c-0e5190453778.gif)
+
+![Filter by checked tags](https://user-images.githubusercontent.com/60306770/83583947-f65c8e80-a502-11ea-9702-b8b19be11577.gif)
 
 ## Setup
 ```bash
