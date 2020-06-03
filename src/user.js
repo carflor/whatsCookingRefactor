@@ -4,28 +4,17 @@ class User {
     this.name = user.name;
     this.pantry = user.pantry
   }
-  
-  checkAbility2Cook(recipe, i = 0) {
-    let ingredient = this.pantry.find(item => item.ingredient === recipe.ingredients[i].id);
 
-    if (i === recipe.ingredients.length) {
-      return true
-    } else if (!ingredient) {
-      return false
-    } else if (ingredient.amount >= recipe.ingredients[i].quantity.amount) {
-      return this.checkAbility2Cook(recipe, (i + 1));
-    } 
+  checkAbility2Cook(recipe) {
+    const availableIngs = recipe.ingredients.reduce((acc, ingredient) => {
+      let userIng = this.pantry.find(ing => ing.ingredient === ingredient.id)
+      if(userIng && userIng.amount >= ingredient.quantity.amount) {
+        acc.push(ingredient);
+      }
+      return acc
+    } ,[])
+    return (availableIngs.length === recipe.ingredients.length)
   }
-
-  // checkAbility2Cook(recipe, counter) {
-  //   return recipe.ingredients.reduce((acc, ingredient) => {
-  //     let userIng = this.pantry.find(ing => ing.ingredient === ingredient.id)
-  //     if(userIng && userIng.amount > ingredient.quantity.amount) {
-  //       acc.push(ingredient);
-  //     }
-  //     return acc
-  //   } ,[])
-  // }
 
   cookRecipe(recipe) {
     if(this.checkAbility2Cook(recipe)) {
