@@ -16,7 +16,7 @@ We built on top of somebody else’s pre-existing Whats Cookin’ codebase and a
 * Leverage Chai Spies to verify that your DOM manipulation is happening
 
 # In Action
-![Main Functionality] (./src/images/2020-06-02%2016.05.37.gif)
+![Main Functionality] (https://github.com/carflor/whatsCookingRefactor/blob/master/src/images/2020-06-02%2016.05.37.gif)
 
 ## Setup
 ```bash
