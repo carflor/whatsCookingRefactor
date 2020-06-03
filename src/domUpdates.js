@@ -7,9 +7,7 @@ const domUpdates = {
       <section class="welcome-msg">
         <h1>Welcome ${firstName}!</h1>
       </section>`;
-    document.querySelector(".banner-image")
-    .insertAdjacentHTML("afterbegin",
-      welcomeMsg);
+    document.querySelector(".banner-image").insertAdjacentHTML("afterbegin", welcomeMsg);
   },
 
   addToDom(recipeInfo, element, boolean) {
@@ -131,7 +129,7 @@ const domUpdates = {
   openRecipeInfo(event, element, recipeRepo, ingredientKey) {
     let recipeId = parseInt(event.target.closest(".recipe-card").id);
     element.style.display = "inline";
-    let recipe = recipeRepo.recipes.find(recipe => recipe.id == recipeId)
+    let recipe = recipeRepo.recipes.find(recipe => recipe.id === recipeId)
     this.generateRecipeTitle(recipe, this.generateIngredients(recipe, ingredientKey), element);
     this.generateInstructions(recipe, element);
     element.insertAdjacentHTML("beforebegin", "<section class='overlay'></section>");
@@ -183,9 +181,10 @@ const domUpdates = {
 
   exitRecipe(element) {
     while (element.firstChild &&
-    element.removeChild(element.firstChild));
+    element.removeChild(element.firstChild)) {
       element.style.display = "none";
       document.querySelector(".overlay").remove();
+    }
   },
 
   toggleMenu(menu) {

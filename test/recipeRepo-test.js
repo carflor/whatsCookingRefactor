@@ -4,7 +4,7 @@ import recipeData from '../src/data/recipe-data';
 import ingredientsData from '../src/data/ingredient-data';
 
 describe('recipeRepo', function() {
-  let ingredients, recipeRepo, recipeRepo2, recipe, recipe1, recipe2, recipeFavorites, recipesToCook;
+  let ingredients, recipeRepo, recipeRepo2, recipe, recipe1, recipe2;
 
   beforeEach(function() {
     recipeRepo = new RecipeRepo(recipeData);

@@ -103,7 +103,6 @@ function createCards(recipeData) {
 function instantiateCards(allRecipes) {
   allRecipes.forEach(singleRecipe => {
     let recipe = new Recipe(singleRecipe, allIngredients) 
-    let counter = recipe.ingredients.length
     domUpdates.addToDom(recipe, main, false)
   });
 }
