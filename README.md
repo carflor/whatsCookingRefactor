@@ -17,6 +17,10 @@ We built on top of somebody else’s pre-existing Whats Cookin’ codebase and a
 
 # In Action
 ![Main Functionality](https://github.com/carflor/whatsCookingRefactor/blob/master/src/images/2020-06-02%2016.05.37.gif)
+![Filter Functionality](https://github.com/carflor/whatsCookingRefactor/blob/master/src/images/filtering.gif)
+![Pantry Funcitonality](https://github.com/carflor/whatsCookingRefactor/blob/master/src/images/post.gif)
+![Ingredients Functionality](https://github.com/carflor/whatsCookingRefactor/blob/master/src/images/instructions.gif)
+![Mobile Functionality](https://github.com/carflor/whatsCookingRefactor/blob/master/src/images/mobile.gif)
 
 ## Setup
 ```bash
