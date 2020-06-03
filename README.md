@@ -16,8 +16,13 @@ We built on top of somebody else’s pre-existing Whats Cookin’ codebase and a
 * Leverage Chai Spies to verify that your DOM manipulation is happening
 
 # In Action
-![Main Functionality] (./src/images/2020-06-02%2016.05.37.gif)
+![Main Functionality] (https://files.slack.com/files-pri/T029P2S9M-F0149UU14MV/ezgif.com-optimize.gif)
 
+![Search functionality](https://user-images.githubusercontent.com/60306770/83583372-6407bb00-a501-11ea-9136-c09f2ff3a951.gif)
+
+![Pantry Update](https://files.slack.com/files-pri/T029P2S9M-F014P5FCLQM/2020-06-02_16.07.09.gif)
+
+![Mobile View](https://files.slack.com/files-pri/T029P2S9M-F0149UZ2LG7/2020-06-02_18.16.30.gif)
 ## Setup
 ```bash
 git clone [file path]
